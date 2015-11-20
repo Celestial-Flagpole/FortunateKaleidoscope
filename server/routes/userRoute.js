@@ -10,6 +10,7 @@ module.exports = function (app) {
   // TODO: Get auth to work for the following two routes. For some reason
   // express.session is regenerating sessionIDs on the get request. Super weird.
   // Someone please fix.
+  app.get('/:username/follow', userController.getFollowers);
   app.post('/:username/follow', userController.followUser);
   app.get('/:username/:snippetID', confirmUserSnippet, userController.getUserSnippet);
   app.post('/:username/:snippetID', confirmUserSnippet, userController.updateSnippet);

@@ -16,7 +16,7 @@ angular.module('sniphub.services', [])
     });
   };
 
-  var addSnippet = function ( user, text, title, tabPrefix, scope, forkedFrom ) {
+  var addSnippet = function ( user, text, title, tabPrefix, tags, scope, forkedFrom ) {
     //If it doesn't have a forkedFrom, set to null
     forkedFrom = forkedFrom || null;
 
@@ -29,7 +29,7 @@ angular.module('sniphub.services', [])
         "tabPrefix" : tabPrefix,
         "title" : title,
         "scope" : scope,
-        "tags" : [],
+        "tags" : tags,
         "forkedFrom" : forkedFrom
        }
     }).then(function successCallback ( response ) {
@@ -38,7 +38,7 @@ angular.module('sniphub.services', [])
     });
   };
 
-  var updateSnippet = function ( snippetId, user, text, title, tabPrefix, scope, forkedFrom ) {
+  var updateSnippet = function ( snippetId, user, text, title, tabPrefix, tags, scope, forkedFrom ) {
     forkedFrom = forkedFrom || null;
     return $http({
       method: 'POST',
@@ -49,7 +49,7 @@ angular.module('sniphub.services', [])
         "tabPrefix" : tabPrefix,
         "title" : title,
         "scope" : scope,
-        "tags" : [],
+        "tags" : [tags],
         "forkedFrom" : forkedFrom
        }
     }).then(function successCallback ( response ) {
@@ -95,13 +95,41 @@ angular.module('sniphub.services', [])
       console.log('Error in getting snippets from db');
     });
   };
+
+  var followUser = function (userToFollow, user) {
+    return $http({
+      method: 'POST',
+      url: '/api/user/' + user + '/follow',
+      data: { "userToFollow": userToFollow, "user" : user }
+    }).then(function successCallback ( response ) {
+      //store all links in scope.data
+      return response;
+    }, function errorCallback ( response ) {
+      console.log('Error in getting snippets from db');
+    });
+  };
+
+  var getFollowers = function (user) {
+    return $http({
+      method: 'GET', 
+      url: '/api/user/' + user + '/follow'
+    }).then (function successCallback (response) {
+      console.log('in service:', response)
+      return response;
+    }, function errorCallback (response) {
+      console.log('Error in getting followers from db');
+    });
+  };
+
   return {
     updateSnippet: updateSnippet,
     fetchBySnippetId: fetchBySnippetId,
     fetchTopTen : fetchTopTen,
     addSnippet : addSnippet,
     fetchByUser: fetchByUser,
-    searchByTerm : searchByTerm
+    searchByTerm : searchByTerm,
+    followUser: followUser,
+    getFollowers: getFollowers
   };
 })
 .factory('Auth', function ($http, $location, $window) {

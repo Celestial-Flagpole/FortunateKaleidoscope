@@ -179,18 +179,22 @@ module.exports = {
     });
   },
 
-  followUser: function (userToFollow, user) {
-    // TODO: 
+  followUser: function (userToFollow, user) { 
     return Promise.all([
       User.findOne({where: {username: userToFollow}}), 
       User.findOne({where: {username: user}})])
     .spread(function (userToFollow, user) {
-          console.log('got here', userToFollow, user)
       return userToFollow.addFollower(user);
     })
     .then(function (something) {
       // DO SOMETHING;
     });
+  }, 
 
+  getFollowers: function (user) {
+    return User.findOne({where: {username: 'iam-peekay'}})
+            .then(function (user) {
+              return user.getFollower();
+            });
   }
 };

@@ -18,6 +18,9 @@
                   </span>
                 </a>
                 <span>
+                  <a ng-click="followUser(snippet.user.username, null)">Follow</a>
+                </span>
+                <span>
                   <a ui-sref="snippets" ng-click="forkSnippet( null, snippet.text, snippet.title, snippet.tabPrefix, snippet.scope, snippet.user.username) ">Fork</a>
                 </span>
                 <span>
@@ -26,6 +29,12 @@
                 <a href="/download/{{snippet.id}}" class="right btn-floating btn-small waves-effect waves-light blue">
                   <i class="mdi-content-archive">&nbsp;&nbsp;</i>
                 </a>
+                <div>
+                  TAGS: 
+                  <span ng-repeat="tag in snippet.tags">
+                    <a>{{tag}}</a>
+                  </span>
+                </div>
               </div>
             </div>
           </div> <!-- materialize column -->
