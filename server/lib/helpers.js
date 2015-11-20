@@ -2,6 +2,7 @@
 var Promise = require('bluebird');
 var db = require('../db/dbconfig');
 var User = db.User;
+var Tag = db.Tag;
 var Snippet = db.Snippet;
 
 
@@ -35,15 +36,16 @@ module.exports = {
 
   writeSnippet: function (req, cb) {
     // takes the array of body tags and turns them into objects
-    var tags = req.body.tags.map(function (tag) {
-      return { tagname: tag };
-    });
+    // var tags = req.body.tags.map(function (tag) {
+    //   return { tagname: tag };
+    // });
     // Parses snippet
     var snippet = escape(req.body.text);
     var languageScope = req.body.scope;
     var snipTitle = escape(req.body.title);
     var tab = escape(req.body.tabPrefix);
     var forkedFrom = req.body.forkedFrom;
+    var tags = req.body.tags;
     // Building snippet object to create
     var post = {
       text: snippet,
@@ -60,12 +62,36 @@ module.exports = {
     User.findOrCreate({
       where: { username: user }
       // if found, adjusts snippet userId to match found user's id
-    }).then(function (result) {
+    })
+    .then(function (result) {
       post.userId = result[0].id;
-      Snippet.create(post).then(function (post) {
-        cb(null, post);
-      });
-    }).catch(cb);
+      Snippet.create(post)
+        .then(function (post) {
+        // generate tag objects so that we can add them to the post
+        return Promise.map(tags, function (tag) {
+          return Tag.findOrCreate({
+            where: {tagname: tag}
+          });
+        })
+        // Tag.findOrCreate({
+        //   where: {tagname: tags[0]}
+        // })
+        .then(function (tags) {
+          var tagsArray = [];
+          for (var i = 0; i < tags.length; i++) {
+            tagsArray.push(tags[i][0]);
+          }
+          return post.addTags(tagsArray)
+            .then(function () {
+              cb(null, post);
+            })
+        })      
+      })
+    })
+    .catch(function(err){
+      console.log(err.message);
+      cb(err, null);
+    });
   },
 
   getSnippet: function (snippetID) {
@@ -87,6 +113,8 @@ module.exports = {
     var languageScope = req.body.scope;
     var snipTitle = escape(req.body.title);
     var tab = escape(req.body.tabPrefix);
+    var tags = req.body.tags;
+    // TODO: If have time, add ability to update tags for Snippet
     // Building snippet object to create
     var post = {
       text: snippet,
@@ -103,15 +131,18 @@ module.exports = {
       return result;
     });
   },
+
   getSnippetsMostRecent: function () {
     //Search all snippets, limit 10, ordered by createdAt date
     return Snippet.findAll({
       limit: 10,
       order: 'createdAt DESC',
-      include: [{
-        model: User
-      }]
+      include: [
+      { model: User}, 
+      { model: Tag }
+      ]
     }).then(function (result) {
+      console.log('result in server', result)
       return result;
     });
   },
@@ -146,5 +177,24 @@ module.exports = {
         where: { tagname: term }
       }]});
     });
+  },
+
+  followUser: function (userToFollow, user) { 
+    return Promise.all([
+      User.findOne({where: {username: userToFollow}}), 
+      User.findOne({where: {username: user}})])
+    .spread(function (userToFollow, user) {
+      return userToFollow.addFollower(user);
+    })
+    .then(function (something) {
+      // DO SOMETHING;
+    });
+  }, 
+
+  getFollowers: function (user) {
+    return User.findOne({where: {username: 'iam-peekay'}})
+            .then(function (user) {
+              return user.getFollower();
+            });
   }
 };
