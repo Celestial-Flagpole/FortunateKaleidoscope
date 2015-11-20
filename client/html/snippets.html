@@ -1,9 +1,16 @@
-<div ng-controller="SnippetsController" id='container' >
-  <input type="text" class="searchSnips" ng-model="search" placeholder="Search"></input>
+<div ng-controller="SnippetsController" id='container'>
   <div>{{snippets}}</div>
+  <div class = "sortby">
+    <select ng-model="sortorder">
+      <option value="" disabled selected>Sort By</option>
+      <option value="+createdAt" ng-model='sortSnippets'>Oldest</option>
+      <option value="+forkedCount" ng-model='sortSnippets'>Most Forked</option>
+    </select>
+  </div>
+  <input type="text" class="searchSnips" ng-model="search" placeholder="Search"></input>
     <div class="container">
       <div class="row">
-        <div ng-repeat="snippet in snippets | snippetFilter:search track by $index" class="snippet">
+        <div ng-repeat="snippet in snippets | snippetFilter:search | orderBy:sortorder track by $index" class="snippet">
           <div class="col s6">
             <div class="card grey darken-4 small">
               <div class="card-content white-text">
@@ -36,6 +43,11 @@
     </div> <!-- materialize container -->
 </div> <!-- ng-controller -->
 
+<script>
+  $(document).ready(function() {
+    $('select').material_select();
+  });
+</script>
 <!-- we are not goint to use angular filter here, we are jsut going to use db search -->
 
 <!--         <button ng-click="searchByTerm(inputEntry)">Search</button> -->

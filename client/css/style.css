@@ -19,7 +19,19 @@ nav form {
   max-height: 120px;
 }
 
-input .searchSnips {
+.searchSnips {
   float: right;
-  width: 350px;
+  width: 250px !important;
+}
+
+.container {
+  margin-top: 75px;
+  position: absolute;
+  margin-left: 150px;
+}
+
+.sortby {
+  float: right;
+  padding-left: 10px;
+  color: gainsboro;
 }
