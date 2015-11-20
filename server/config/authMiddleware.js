@@ -2,8 +2,11 @@
 var getSnippet = require('../lib/helpers').getSnippet;
 // Checks to see if user is authenticated
 exports.authMiddleware = function (req, res, next) {
-  if (req.isAuthenticated()) { return next(); }
-  res.redirect('/');
+  if (req.isAuthenticated()) { 
+    next();
+  } else {
+    res.redirect('/');
+  }
 };
 
 // Check to see if snippet belongs to user

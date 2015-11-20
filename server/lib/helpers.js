@@ -2,6 +2,7 @@
 var Promise = require('bluebird');
 var db = require('../db/dbconfig');
 var User = db.User;
+var Tag = db.Tag;
 var Snippet = db.Snippet;
 
 
@@ -35,15 +36,16 @@ module.exports = {
 
   writeSnippet: function (req, cb) {
     // takes the array of body tags and turns them into objects
-    var tags = req.body.tags.map(function (tag) {
-      return { tagname: tag };
-    });
+    // var tags = req.body.tags.map(function (tag) {
+    //   return { tagname: tag };
+    // });
     // Parses snippet
     var snippet = escape(req.body.text);
     var languageScope = req.body.scope;
     var snipTitle = escape(req.body.title);
     var tab = escape(req.body.tabPrefix);
     var forkedFrom = req.body.forkedFrom;
+    var tags = req.body.tags;
     // Building snippet object to create
     var post = {
       text: snippet,
@@ -60,12 +62,35 @@ module.exports = {
     User.findOrCreate({
       where: { username: user }
       // if found, adjusts snippet userId to match found user's id
-    }).then(function (result) {
+    })
+    .then(function (result) {
       post.userId = result[0].id;
-      Snippet.create(post).then(function (post) {
-        cb(null, post);
-      });
-    }).catch(cb);
+      return Snippet.create(post);
+    }).then(function (post) {
+        // generate tag objects so that we can add them to the post
+        // return Promise.map(tags, function (tag) {
+        //   return Tag.findOrCreate({
+        //     where: {tagname: tag}
+        //   });
+        // })
+        Tag.findOrCreate({
+          where: {tagname: tags[0]}
+        })
+        .then(function (tag) {
+          console.log('tag', tag[0].id)
+          console.log('POST', post)
+          post.addTag([tag, tag[0].id]);
+          cb(null, post);
+        })
+        // .then(function(post){
+        //   cb(null, post);
+        // });
+        // cb(null, post);       
+    })
+    .catch(function(err){
+      console.log(err.message);
+      cb(err, null);
+    });
   },
 
   getSnippet: function (snippetID) {

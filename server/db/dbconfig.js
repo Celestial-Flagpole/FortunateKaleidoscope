@@ -54,11 +54,22 @@ sequelize
   });
 
 // Creates one to many relationship between User and Snippets table
+// Instances of User will get the accessors getSnippets and setSnippets
 Snippet.belongsTo(User, {foreignKey: 'userId'});
 User.hasMany(Snippet, {foreignKey: 'userId'});
-// Creates many to many relationship between Snippets and Taga
+// Creates many to many relationship between Snippets and Tags
 Snippet.belongsToMany(Tag, { through: 'snippet_tag'});
 Tag.belongsToMany(Snippet, { through: 'snippet_tag'});
+// This will create a new model called snippet_tag with the equivalent 
+// foreign keys SnippetId and TagId. 
+// This will add methods getSnippets, setSnippets, addSnippet,addSnippets
+// to Tags, and getTags, setTags and addTag, addTags to Snippet.
+
+User.belongsToMany(User, { as: 'Followers', through: 'UserFollowers'});
+
+Snippet.sync();
+User.sync();
+Tag.sync();
 
 module.exports = {
   User: User,
