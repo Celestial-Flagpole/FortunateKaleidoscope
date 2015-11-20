@@ -20,7 +20,7 @@ var mysql = require('mysql');
 
 
 
-var User = sequelize.define('users', {
+var User = sequelize.define('user', {
   username: {
     type: Sequelize.STRING,
     unique: true
@@ -28,7 +28,7 @@ var User = sequelize.define('users', {
   imgUrl: Sequelize.STRING
 });
 
-var Snippet = sequelize.define('snippets', {
+var Snippet = sequelize.define('snippet', {
   text : Sequelize.STRING(2000),
   forkedCount : Sequelize.INTEGER,
   tabPrefix : Sequelize.STRING,
@@ -37,28 +37,49 @@ var Snippet = sequelize.define('snippets', {
   forkedFrom : Sequelize.STRING
 });
 
-//TODO: Tag tables are inserted for later addition of tags
-var Tag = sequelize.define('tags', {
+// Tag tables are inserted for later addition of tags
+var Tag = sequelize.define('tag', {
   tagname: {
     type: Sequelize.STRING,
     unique: true
   }
 });
 
+// Creates one to many relationship between User and Snippets table
+// Instances of User will get the accessors getSnippets and setSnippets
+Snippet.belongsTo(User, {foreignKey: 'userId'});
+User.hasMany(Snippet, {foreignKey: 'userId'});
+// Creates many to many relationship between Snippets and Tags
+Snippet.belongsToMany(Tag, { through: 'snippet_tag'});
+Tag.belongsToMany(Snippet, { through: 'snippet_tag'});
+// This will create a new model called snippet_tag with the equivalent 
+// foreign keys SnippetId and TagId. 
+// This will add methods getSnippets, setSnippets, addSnippet,addSnippets
+// to Tags, and getTags, setTags and addTag, addTags to Snippet.
+
+User.belongsToMany(User, { as: 'Follower', through: 'Followers'});
+
 sequelize
-  .sync()
+  .sync({force: true})
   .then(function (err) {
     console.log('It worked!');
+    // Tag.create({tagname: 'test'})
+    //   .then (function (tag) {
+    //     console.log('tag', tag)
+    //     Snippet.create({text: 'adfasdfasdf'})
+    //     .then (function (snippet) {
+    //       console.log('snippet', snippet)
+    //       snippet.addTag(tag);
+    //     })
+    //   });
   }, function (err) {
     console.log('An error occurred while creating the table:', err);
   });
+// Snippet.sync();
+// User.sync();
+// Tag.sync();
 
-// Creates one to many relationship between User and Snippets table
-Snippet.belongsTo(User, {foreignKey: 'userId'});
-User.hasMany(Snippet, {foreignKey: 'userId'});
-// Creates many to many relationship between Snippets and Taga
-Snippet.belongsToMany(Tag, { through: 'snippet_tag'});
-Tag.belongsToMany(Snippet, { through: 'snippet_tag'});
+
 
 module.exports = {
   User: User,

@@ -3,10 +3,28 @@ angular.module('sniphub.snippets', ['hljs'])
 
 .controller('SnippetsController', function (Auth, $scope, $location, SniphubServices) {
   $scope.snippets = [];
+  $scope.followers = [];
   
   $scope.getUsername = function () {
     $scope.loggedInUser = Auth.isAuth('username');
   };
+
+  $scope.followUser = function (userToFollow, user) {
+    user = $scope.loggedInUser;
+    SniphubServices.followUser(userToFollow, user)
+      .then(function (response) {
+        // TODO: DO SOMETHING;
+      });
+  };
+
+  // MOVE TO SNIPPETUSER controller
+  // $scope.getFollowers = function (user) {
+  //   user = $scope.loggedInUser;
+  //   SniphubServices.getFollower(user)
+  //     .then(function (response) {
+  //       $scope.followers = response.data;
+  //     })
+  // };
 
   $scope.fetchTopTen = function () {
     //call factory function
@@ -16,6 +34,9 @@ angular.module('sniphub.snippets', ['hljs'])
         $scope.snippets.forEach(function (item) {
           item.text = unescape(item.text);
           item.title = unescape(item.title);
+          item.tags = item.tags.map(function (tag) {
+            return tag.tagname;
+          });
         });
       });
   };

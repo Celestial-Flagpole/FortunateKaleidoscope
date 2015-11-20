@@ -16,9 +16,11 @@ module.exports = {
       }
     });
   },
+
   getUserSnippet: function (req, res) {
     res.json(req.snippetJSON);
   },
+
   updateSnippet: function (req, res) {
     req.body.id = req.params.snippetID;
     helpers.updateSnippet(req).then(function (result) {
@@ -28,6 +30,33 @@ module.exports = {
       res.redirect('/');
     });
   },
+
+  followUser: function (req, res) {
+    var userToFollow = req.body.userToFollow;
+    var user = req.body.user;
+    helpers.followUser(userToFollow, user)
+      .then(function (result) {
+        res.json(result);
+      })
+      .catch(function (err) {
+        console.log(err);
+        res.redirect('/');
+      });
+  },
+
+  getFollowers: function (req, res) {
+    var user = req.body.user;
+    helpers.getFollowers(user)
+      .then(function (result) {
+        console.log('in usercontroller', result)
+        res.json(result);
+      })
+      .catch(function (err) {
+        console.log(err.message);
+        res.redirect('/');
+      });
+  },
+
   downloadSnippets: function (req, res) {
     // Get username
     var username = req.params.username;

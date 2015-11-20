@@ -31,6 +31,9 @@
             </div>
           </div> <!-- materialize column -->
         </div> <!-- ng-repeat -->
+        <div ng-repeat="follower in followers track by $index">
+          <div> {{follower.FollowerId}} </div>
+        </div>
       </div> <!-- materilaize row -->
     </div> <!-- materialize container -->
 </div> <!-- ng-controller -->

@@ -22,4 +22,5 @@ module.exports = {
         res.json({created: true});
       });
   }
+
 };

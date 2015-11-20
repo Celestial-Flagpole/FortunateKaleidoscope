@@ -1,12 +1,16 @@
 <div ng-controller='AddSnippetController' id='container'>
   <div class="row">
+<<<<<<< HEAD
     <form class="col s12" ng-submit='postSnippet(userField, inputEntry, titleField , tabField, scope, tagField)'name ="AddSnippetForm">
+=======
+    <form class="col s12" ng-submit='postSnippet(userField, inputEntry, titleField , tabField, tagField, scope)'name ="AddSnippetForm">
+>>>>>>> 0a9497dcfe4a947fb6a00b987d843df8c1c2e249
       <div class="row">
         <div class="input-field col s12">
           <input required type="text" class="validate text" type="text" name="text" ng-model='titleField'>
           <label for="last_name">Title</label>
         </div>
-        <div class="input-field col s6">
+        <div class="input-field col s4">
           <select ng-model="scope">
             <option value="" disabled selected>Choose Scope</option>
             <option value="source.actionscript.2" ng-model='scope'>ActionScript</option>
@@ -76,15 +80,22 @@
           </select>
           <label>Scope</label>
         </div>
-        <div class="input-field col s6">
+        <div class="input-field col s4">
           <input required type="text" class="validate text" type="text" name="text" ng-model='tabField'>
           <label for="last_name">Tab Prefix</label>
         </div>
+<<<<<<< HEAD
         <div class="input-field col s6">
           <input required type="text" class="validate text" type="text" name="text" ng-model='tagField'>
           <label for="last_name">Tag</label>
         </div>
 
+=======
+        <div class="input-field col s4">
+          <input required type="text" class="validate text" type="text" name="text" ng-model='tagField'>
+          <label for="tags">Tags</label>
+        </div>
+>>>>>>> 0a9497dcfe4a947fb6a00b987d843df8c1c2e249
         <div class="input-field col s12">
 
           <textarea required maxlength="500" id="textarea1" class="materialize-textarea text" name="text" ng-model='inputEntry'>
