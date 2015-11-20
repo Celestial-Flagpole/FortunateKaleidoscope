@@ -1,6 +1,6 @@
 <div ng-controller='AddSnippetController' id='container'>
   <div class="row">
-    <form class="col s12" ng-submit='postSnippet(userField, inputEntry, titleField , tabField, scope)'name ="AddSnippetForm">
+    <form class="col s12" ng-submit='postSnippet(userField, inputEntry, titleField , tabField, scope, tagField)'name ="AddSnippetForm">
       <div class="row">
         <div class="input-field col s12">
           <input required type="text" class="validate text" type="text" name="text" ng-model='titleField'>
@@ -80,6 +80,11 @@
           <input required type="text" class="validate text" type="text" name="text" ng-model='tabField'>
           <label for="last_name">Tab Prefix</label>
         </div>
+        <div class="input-field col s6">
+          <input required type="text" class="validate text" type="text" name="text" ng-model='tagField'>
+          <label for="last_name">Tag</label>
+        </div>
+
         <div class="input-field col s12">
 
           <textarea required maxlength="500" id="textarea1" class="materialize-textarea text" name="text" ng-model='inputEntry'>

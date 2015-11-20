@@ -16,7 +16,7 @@ angular.module('sniphub.services', [])
     });
   };
 
-  var addSnippet = function ( user, text, title, tabPrefix, scope, forkedFrom ) {
+  var addSnippet = function ( user, text, title, tabPrefix, scope, tag, forkedFrom ) {
     //If it doesn't have a forkedFrom, set to null
     forkedFrom = forkedFrom || null;
 
@@ -29,7 +29,7 @@ angular.module('sniphub.services', [])
         "tabPrefix" : tabPrefix,
         "title" : title,
         "scope" : scope,
-        "tags" : [],
+        "tags" : tag,
         "forkedFrom" : forkedFrom
        }
     }).then(function successCallback ( response ) {
