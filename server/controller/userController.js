@@ -28,6 +28,18 @@ module.exports = {
       res.redirect('/');
     });
   },
+  followUser: function (req, res) {
+    var userToFollow = req.body.userToFollow;
+    var user = req.body.user;
+    helpers.followUser(userToFollow, user)
+      .then(function (result) {
+        res.json(result);
+      })
+      .catch(function (err) {
+        console.log(err);
+        res.redirect('/');
+      });
+  },
   downloadSnippets: function (req, res) {
     // Get username
     var username = req.params.username;

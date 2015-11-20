@@ -65,27 +65,28 @@ module.exports = {
     })
     .then(function (result) {
       post.userId = result[0].id;
-      return Snippet.create(post);
-    }).then(function (post) {
+      Snippet.create(post)
+        .then(function (post) {
         // generate tag objects so that we can add them to the post
-        // return Promise.map(tags, function (tag) {
-        //   return Tag.findOrCreate({
-        //     where: {tagname: tag}
-        //   });
+        return Promise.map(tags, function (tag) {
+          return Tag.findOrCreate({
+            where: {tagname: tag}
+          });
+        })
+        // Tag.findOrCreate({
+        //   where: {tagname: tags[0]}
         // })
-        Tag.findOrCreate({
-          where: {tagname: tags[0]}
-        })
-        .then(function (tag) {
-          console.log('tag', tag[0].id)
-          console.log('POST', post)
-          post.addTag([tag, tag[0].id]);
-          cb(null, post);
-        })
-        // .then(function(post){
-        //   cb(null, post);
-        // });
-        // cb(null, post);       
+        .then(function (tags) {
+          var tagsArray = [];
+          for (var i = 0; i < tags.length; i++) {
+            tagsArray.push(tags[i][0]);
+          }
+          return post.addTags(tagsArray)
+            .then(function () {
+              cb(null, post);
+            })
+        })      
+      })
     })
     .catch(function(err){
       console.log(err.message);
@@ -112,6 +113,8 @@ module.exports = {
     var languageScope = req.body.scope;
     var snipTitle = escape(req.body.title);
     var tab = escape(req.body.tabPrefix);
+    var tags = req.body.tags;
+    // TODO: If have time, add ability to update tags for Snippet
     // Building snippet object to create
     var post = {
       text: snippet,
@@ -128,15 +131,18 @@ module.exports = {
       return result;
     });
   },
+
   getSnippetsMostRecent: function () {
     //Search all snippets, limit 10, ordered by createdAt date
     return Snippet.findAll({
       limit: 10,
       order: 'createdAt DESC',
-      include: [{
-        model: User
-      }]
+      include: [
+      { model: User}, 
+      { model: Tag }
+      ]
     }).then(function (result) {
+      console.log('result in server', result)
       return result;
     });
   },
@@ -171,5 +177,20 @@ module.exports = {
         where: { tagname: term }
       }]});
     });
+  },
+
+  followUser: function (userToFollow, user) {
+    // TODO: 
+    return Promise.all([
+      User.findOne({where: {username: userToFollow}}), 
+      User.findOne({where: {username: user}})])
+    .spread(function (userToFollow, user) {
+          console.log('got here', userToFollow, user)
+      return userToFollow.addFollower(user);
+    })
+    .then(function (something) {
+      // DO SOMETHING;
+    });
+
   }
 };

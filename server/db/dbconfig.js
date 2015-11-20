@@ -20,7 +20,7 @@ var mysql = require('mysql');
 
 
 
-var User = sequelize.define('users', {
+var User = sequelize.define('user', {
   username: {
     type: Sequelize.STRING,
     unique: true
@@ -28,7 +28,7 @@ var User = sequelize.define('users', {
   imgUrl: Sequelize.STRING
 });
 
-var Snippet = sequelize.define('snippets', {
+var Snippet = sequelize.define('snippet', {
   text : Sequelize.STRING(2000),
   forkedCount : Sequelize.INTEGER,
   tabPrefix : Sequelize.STRING,
@@ -37,21 +37,13 @@ var Snippet = sequelize.define('snippets', {
   forkedFrom : Sequelize.STRING
 });
 
-//TODO: Tag tables are inserted for later addition of tags
-var Tag = sequelize.define('tags', {
+// Tag tables are inserted for later addition of tags
+var Tag = sequelize.define('tag', {
   tagname: {
     type: Sequelize.STRING,
     unique: true
   }
 });
-
-sequelize
-  .sync()
-  .then(function (err) {
-    console.log('It worked!');
-  }, function (err) {
-    console.log('An error occurred while creating the table:', err);
-  });
 
 // Creates one to many relationship between User and Snippets table
 // Instances of User will get the accessors getSnippets and setSnippets
@@ -65,11 +57,29 @@ Tag.belongsToMany(Snippet, { through: 'snippet_tag'});
 // This will add methods getSnippets, setSnippets, addSnippet,addSnippets
 // to Tags, and getTags, setTags and addTag, addTags to Snippet.
 
-User.belongsToMany(User, { as: 'Followers', through: 'UserFollowers'});
+User.belongsToMany(User, { as: 'Follower', through: 'Followers'});
 
-Snippet.sync();
-User.sync();
-Tag.sync();
+sequelize
+  .sync({force: true})
+  .then(function (err) {
+    console.log('It worked!');
+    // Tag.create({tagname: 'test'})
+    //   .then (function (tag) {
+    //     console.log('tag', tag)
+    //     Snippet.create({text: 'adfasdfasdf'})
+    //     .then (function (snippet) {
+    //       console.log('snippet', snippet)
+    //       snippet.addTag(tag);
+    //     })
+    //   });
+  }, function (err) {
+    console.log('An error occurred while creating the table:', err);
+  });
+// Snippet.sync();
+// User.sync();
+// Tag.sync();
+
+
 
 module.exports = {
   User: User,
