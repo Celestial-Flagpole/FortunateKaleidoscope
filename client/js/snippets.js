@@ -29,7 +29,7 @@ angular.module('sniphub.snippets', ['hljs'])
   $scope.fetchTopTen = function () {
     //call factory function
     SniphubServices.fetchTopTen()
-      .then(function ( snippets ) {
+      .then(function (snippets) {
         $scope.snippets = snippets.data;
         $scope.snippets.forEach(function (item) {
           item.text = unescape(item.text);
@@ -41,13 +41,13 @@ angular.module('sniphub.snippets', ['hljs'])
       });
   };
 
-  $scope.forkSnippet = function ( user, text, title, tabPrefix, scope, forkedFrom ) {
+  $scope.forkSnippet = function (user, text, title, tabPrefix, scope, forkedFrom) {
     //calls the auth cookie parser to get the currently logged in username.
-    user = $scope.loggedInUser
+    user = $scope.loggedInUser;
     // Only forks if the user is not the same as the forked from.
-    if ( user !== forkedFrom ) {
+    if (user !== forkedFrom) {
       //call the factory function with new user and forkedFrom data
-      SniphubServices.addSnippet( user, text, title, tabPrefix, scope, forkedFrom ).then(function ( response ) {
+      SniphubServices.addSnippet(user, text, title, tabPrefix, scope, forkedFrom).then(function (response) {
         $scope.fetchTopTen();
       });
     }

@@ -18,3 +18,20 @@ nav form {
 .hljs {
   max-height: 120px;
 }
+
+.searchSnips {
+  float: right;
+  width: 250px !important;
+}
+
+.container {
+  margin-top: 75px;
+  position: absolute;
+  margin-left: 150px;
+}
+
+.sortby {
+  float: right;
+  padding-left: 10px;
+  color: gainsboro;
+}
