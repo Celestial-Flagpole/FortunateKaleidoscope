@@ -59,6 +59,13 @@ angular.module('sniphub.snippets', ['hljs'])
     }
   };
 
+  $scope.starSnippet = function (snippetId) {
+    SniphubServices.starSnippet(snippetId)
+      .then(function (response) {
+        console.log('Snippet was starred!*');
+      });
+  };
+
   //call once upon app load
   $scope.$watch('$viewContentLoaded', function () {
     $scope.getUsername();

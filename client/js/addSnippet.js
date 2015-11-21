@@ -11,8 +11,8 @@ angular.module('sniphub.addSnippet', [])
 
   $scope.postSnippet = function (  user, text, title, tabPrefix, tags, scope  ) {
     var tagsArray = tags.split(',');
-    console.log(tags);
-    SniphubServices.addSnippet( user, text, title, tabPrefix, tagsArray, scope ).then(function ( response ) {
+    SniphubServices.addSnippet( user, text, title, tabPrefix, tagsArray, scope ).then(function (response) {
+      console.log('added snippet')
       $scope.submitted();
     });
   };
