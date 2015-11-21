@@ -4,9 +4,9 @@
   "name": "Snippets",
   "description": "This extension allows you to easily save and use snippets",
   "version": "1.0",
-  "key": "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCM9NA1cLHYrp+htpkHWHmXKAXja/DNfyrSb2mkvfGRT/JVxbPDXJqeRXwhqwYpxgNxMxcD8skIqSy6zHWqtymzjqyFVbMg4ox7qyLC7dEMdx0TgstYjtC3KjEZNM7VM0gRlReJoQuSM/GSIGnAlUjP7Ahd1XF16JgZPICSoeFiTQIDAQAB",
+  "key": "baaenjnmlaejajnalldcecpdafeggelb",
 
-  "background" : "background.html",
+  "background" : {"pages": ["background.html"]},
   "browser_action": {
     "default_icon": "scissors.png",
     "default_popup":"window.html"
