@@ -203,7 +203,7 @@ module.exports = {
   getSnippetsMostRecent: function () {
     //Search all snippets, limit 10, ordered by createdAt date
     return Snippet.findAll({
-      limit: 10,
+      limit: 20,
       order: 'createdAt DESC',
       include: [
       { model: User}, 

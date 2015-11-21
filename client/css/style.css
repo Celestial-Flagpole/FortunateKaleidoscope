@@ -1,20 +1,17 @@
 body {
-  background-color: #49483e;
+  background-color: #EDF2F4;
 }
 nav {
-  background-color: #383830;
+  background-color: #2B2D42;
 }
 nav .brand-logo {
-  /*margin-left: 20px;*/
-  color: #66d9ef;
+  color: #FFB4A2;
 }
-.sub {
-  color: #a6e22e;
+
+.inputdemoErrors .inputErrorsApp {
+  min-height: 48px; 
 }
-nav form {
-  /*margin-left: 180px;*/
-  width: 300px;
-}
+
 .hljs {
   max-height: 120px;
 }
@@ -24,10 +21,12 @@ nav form {
   width: 250px !important;
 }
 
-.container {
-  margin-top: 75px;
-  position: absolute;
-  margin-left: 150px;
+.addSnippet {
+  margin: 100px;
+}
+
+.addSnippetButton {
+  margin-top: 50px;
 }
 
 .sortby {
@@ -35,3 +34,5 @@ nav form {
   padding-left: 10px;
   color: gainsboro;
 }
+
+

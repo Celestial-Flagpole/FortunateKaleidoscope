@@ -3,7 +3,7 @@
     <select ng-model="sortorder">
       <option value="" disabled selected>Sort By</option>
       <option value="+createdAt" ng-model='sortSnippets'>Oldest</option>
-      <option value="+forkedCount" ng-model='sortSnippets'>Most Forked</option>
+      <option value="-forkedCount" ng-model='sortSnippets'>Most Forked</option>
     </select>
   </div>
   <input type="text" class="searchSnips" ng-model="search" placeholder="Search"></input>
