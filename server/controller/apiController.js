@@ -21,6 +21,12 @@ module.exports = {
     helpers.writeSnippet(req, function () {
         res.json({created: true});
       });
+  },
+
+  forkSnippet: function (req, res) {
+    helpers.forkSnippet(req, function () {
+        res.json({created: true});
+      });
   }
 
 };
