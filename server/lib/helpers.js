@@ -94,6 +94,74 @@ module.exports = {
     });
   },
 
+  forkSnippet: function (req, cb) {
+    // Parses snippet
+    var snippet = escape(req.body.text);
+    var languageScope = req.body.scope;
+    var snipTitle = escape(req.body.title);
+    var tab = escape(req.body.tabPrefix);
+    var forkedFrom = req.body.forkedFrom;
+    var snippetId = req.body.id;
+    var tags = req.body.tags;
+    // Update our snippet's fork count
+    console.log('tags', tags)
+    Snippet.findOne({
+      where: { id: snippetId }
+    })
+      .then(function (snippet) {
+        console.log(snippet.dataValues.forkedCount);
+        console.log('snippet')
+        var newCount = snippet.dataValues.forkedCount + 1;
+        snippet.update({forkedCount: newCount });
+      });
+    // Building NEW snippet object to fork
+    var post = {
+      text: snippet,
+      forkedCount: 0,
+      tabPrefix: tab,
+      title: snipTitle,
+      scope: languageScope,
+      forkedFrom: forkedFrom
+    };
+    // Retrieves user name from request
+    var user = req.user.username;
+
+    // Searches for User based on request
+    User.findOrCreate({
+      where: { username: user }
+      // if found, adjusts snippet userId to match found user's id
+    })
+    .then(function (result) {
+      post.userId = result[0].id;
+      Snippet.create(post)
+        .then(function (post) {
+        // generate tag objects so that we can add them to the post
+        return Promise.map(tags, function (tag) {
+          return Tag.findOrCreate({
+            where: {tagname: tag}
+          });
+        })
+        // Tag.findOrCreate({
+        //   where: {tagname: tags[0]}
+        // })
+        .then(function (tags) {
+          var tagsArray = [];
+          for (var i = 0; i < tags.length; i++) {
+            tagsArray.push(tags[i][0]);
+          }
+          return post.addTags(tagsArray)
+            .then(function () {
+              cb(null, post);
+            })
+        })      
+      })
+    })
+    .catch(function(err){
+      console.log(err.message);
+      cb(err, null);
+    });
+  },
+
   getSnippet: function (snippetID) {
     return Snippet.findOne({
       where: {
@@ -135,14 +203,13 @@ module.exports = {
   getSnippetsMostRecent: function () {
     //Search all snippets, limit 10, ordered by createdAt date
     return Snippet.findAll({
-      limit: 10,
+      limit: 20,
       order: 'createdAt DESC',
       include: [
       { model: User}, 
       { model: Tag }
       ]
     }).then(function (result) {
-      console.log('result in server', result)
       return result;
     });
   },

@@ -20,7 +20,6 @@ angular.module('sniphub.services', [])
   var addSnippet = function ( user, text, title, tabPrefix, tags, scope, forkedFrom ) {
     //If it doesn't have a forkedFrom, set to null
     forkedFrom = forkedFrom || null;
-
     return $http({
       method: 'POST',
       url: '/api/snippet',
@@ -39,6 +38,28 @@ angular.module('sniphub.services', [])
     });
   };
 
+  var forkSnippet = function ( user, text, title, tabPrefix, tags, scope, forkedFrom, snippetId ) {
+        console.log('in services', snippetId, forkedFrom)
+
+    return $http({
+      method: 'POST',
+      url: '/api/snippet/fork',
+      data: {
+        "username" : user,
+        "text" : text,
+        "tabPrefix" : tabPrefix,
+        "title" : title,
+        "scope" : scope,
+        "tags": tags,
+        "forkedFrom" : forkedFrom,
+        "id": snippetId
+       }
+    }).then(function successCallback ( response ) {
+      console.log("after success");
+      return response;
+    });
+  };
+
   var updateSnippet = function ( snippetId, user, text, title, tabPrefix, tags, scope, forkedFrom ) {
     forkedFrom = forkedFrom || null;
     return $http({
@@ -50,7 +71,7 @@ angular.module('sniphub.services', [])
         "tabPrefix" : tabPrefix,
         "title" : title,
         "scope" : scope,
-        "tags" : [tags],
+        "tags" : tags,
         "forkedFrom" : forkedFrom
        }
     }).then(function successCallback ( response ) {
@@ -130,7 +151,8 @@ angular.module('sniphub.services', [])
     fetchByUser: fetchByUser,
     searchByTerm : searchByTerm,
     followUser: followUser,
-    getFollowers: getFollowers
+    getFollowers: getFollowers,
+    forkSnippet: forkSnippet
   };
 })
 .factory('Auth', function ($http, $location, $window) {
