@@ -1,0 +1,23 @@
+{
+  "name": "exSnippets",
+  "homepage": "https://github.com/MCavataio/FortunateKaleidoscope",
+  "authors": [
+    "mcavataio <Mcavataiosfp@gmail.com>"
+  ],
+  "description": "snippets",
+  "main": "window.html",
+  "moduleType": [],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "client/js/vendor",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.4"
+  }
+}
