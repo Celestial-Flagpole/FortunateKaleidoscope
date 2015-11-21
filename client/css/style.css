@@ -19,10 +19,11 @@ nav .brand-logo {
 .searchSnips {
   float: right;
   width: 250px !important;
+  margin-bottom: 80px;
 }
 
-.addSnippet {
-  margin: 100px;
+#addSnippet {
+  margin: 100px 200px 100px 200px;
 }
 
 .addSnippetButton {
@@ -33,6 +34,7 @@ nav .brand-logo {
   float: right;
   padding-left: 10px;
   color: gainsboro;
+  padding-bottom: 100px;
 }
 
 
