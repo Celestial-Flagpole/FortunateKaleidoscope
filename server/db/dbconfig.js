@@ -60,7 +60,7 @@ Tag.belongsToMany(Snippet, { through: 'snippet_tag'});
 User.belongsToMany(User, { as: 'Follower', through: 'Followers'});
 
 sequelize
-  .sync({force: true})
+  .sync()
   .then(function (err) {
     console.log('It worked!');
     // Tag.create({tagname: 'test'})

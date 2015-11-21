@@ -41,13 +41,19 @@ angular.module('sniphub.snippets', ['hljs'])
       });
   };
 
-  $scope.forkSnippet = function (user, text, title, tabPrefix, scope, forkedFrom) {
+  $scope.forkSnippet = function (user, text, title, tabPrefix, tags, scope, forkedFrom, snippetId) {
     //calls the auth cookie parser to get the currently logged in username.
+    console.log('snippets controller', tags)
     user = $scope.loggedInUser;
     // Only forks if the user is not the same as the forked from.
     if (user !== forkedFrom) {
       //call the factory function with new user and forkedFrom data
-      SniphubServices.addSnippet(user, text, title, tabPrefix, scope, forkedFrom).then(function (response) {
+      if (Array.isArray(tags)) {
+        var tagsArray = tags;
+      } else {
+        var tagsArray = tags.split(',');
+      }
+      SniphubServices.forkSnippet(user, text, title, tabPrefix, tagsArray, scope, forkedFrom, snippetId).then(function (response) {
         $scope.fetchTopTen();
       });
     }
