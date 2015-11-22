@@ -74,6 +74,21 @@ angular.module('sniphub.services', [])
     });
   };
 
+  var gistSnippet = function (snippetId) {
+    return $http({
+      method: 'POST',
+      url: '/download/gist',
+      data: {
+        "snippetId": snippetId
+      }
+    })
+      .then(function successCallback (response) {
+        return response;
+      }, function errorCallback (response) {
+        console.log('Error in creating a gist :(');
+      });
+  };
+
   var updateSnippet = function ( snippetId, user, text, title, tabPrefix, tags, scope, forkedFrom ) {
     forkedFrom = forkedFrom || null;
     return $http({
@@ -167,7 +182,8 @@ angular.module('sniphub.services', [])
     followUser: followUser,
     getFollowers: getFollowers,
     forkSnippet: forkSnippet,
-    starSnippet: starSnippet
+    starSnippet: starSnippet,
+    gistSnippet: gistSnippet
   };
 })
 .factory('Auth', function ($http, $location, $window) {

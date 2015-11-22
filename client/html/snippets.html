@@ -38,6 +38,9 @@
                   <a ui-sref="snippets" ng-click="forkSnippet( null, snippet.text, snippet.title, snippet.tabPrefix, snippet.tags, snippet.scope, snippet.user.username, snippet.id) ">Fork</a>
                 </span>
                 <span>
+                  <a ui-sref="snippets" ng-click="gistSnippet(snippet.id) ">Gist it</a>
+                </span>
+                <span>
                   <a ui-sref="snippets" ng-click="starSnippet(snippet.id) ">Star</a>
                 </span>
                 <span>
