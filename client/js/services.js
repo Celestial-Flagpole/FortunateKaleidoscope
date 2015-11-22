@@ -39,7 +39,6 @@ angular.module('sniphub.services', [])
   };
 
   var forkSnippet = function ( user, text, title, tabPrefix, tags, scope, forkedFrom, snippetId ) {
-        console.log('in services', snippetId, forkedFrom)
 
     return $http({
       method: 'POST',
@@ -58,6 +57,36 @@ angular.module('sniphub.services', [])
       console.log("after success");
       return response;
     });
+  };
+
+  var starSnippet = function (snippetId) {
+    return $http({
+      method: 'POST',
+      url: '/api/snippet/star',
+      data: {
+        "id": snippetId
+      }
+    })
+      .then(function successCallback (response) {
+        return response;
+      }, function errorCallback (response) {
+      console.log('Error in starring snippet in db')
+    });
+  };
+
+  var gistSnippet = function (snippetId) {
+    return $http({
+      method: 'POST',
+      url: '/download/gist',
+      data: {
+        "snippetId": snippetId
+      }
+    })
+      .then(function successCallback (response) {
+        return response;
+      }, function errorCallback (response) {
+        console.log('Error in creating a gist :(');
+      });
   };
 
   var updateSnippet = function ( snippetId, user, text, title, tabPrefix, tags, scope, forkedFrom ) {
@@ -152,7 +181,9 @@ angular.module('sniphub.services', [])
     searchByTerm : searchByTerm,
     followUser: followUser,
     getFollowers: getFollowers,
-    forkSnippet: forkSnippet
+    forkSnippet: forkSnippet,
+    starSnippet: starSnippet,
+    gistSnippet: gistSnippet
   };
 })
 .factory('Auth', function ($http, $location, $window) {

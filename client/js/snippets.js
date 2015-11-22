@@ -1,7 +1,7 @@
 // FIX ALL THIS
 angular.module('sniphub.snippets', ['hljs'])
 
-.controller('SnippetsController', function (Auth, $scope, $location, SniphubServices) {
+.controller('SnippetsController', function (Auth, $scope, $location, $window, SniphubServices) {
   $scope.snippets = [];
   $scope.followers = [];
   
@@ -57,6 +57,22 @@ angular.module('sniphub.snippets', ['hljs'])
         $scope.fetchTopTen();
       });
     }
+  };
+
+  $scope.starSnippet = function (snippetId) {
+    SniphubServices.starSnippet(snippetId)
+      .then(function (response) {
+        console.log('Snippet was starred!*');
+      });
+  };
+
+  $scope.gistSnippet = function (snippetId) {
+    SniphubServices.gistSnippet(snippetId)
+      .then(function (response) {
+        console.log('Gist was created! WOHOOOO');
+        console.log(response);
+        $window.open(response.data.body.html_url);
+      });
   };
 
   //call once upon app load

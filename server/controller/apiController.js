@@ -18,6 +18,7 @@ module.exports = {
     res.json(dummyData);
   },
   writeSnippet: function (req, res) {
+    console.log('writeSnippet')
     helpers.writeSnippet(req, function () {
         res.json({created: true});
       });
@@ -27,6 +28,12 @@ module.exports = {
     helpers.forkSnippet(req, function () {
         res.json({created: true});
       });
+  },
+
+  starSnippet: function (req, res) {
+    helpers.starSnippet(req, function () {
+      res.json({created: true});
+    });
   }
 
 };

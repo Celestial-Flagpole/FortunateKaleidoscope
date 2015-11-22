@@ -2,6 +2,7 @@
 var utils = require('../lib/utils');
 var helpers = require('../lib/helpers');
 var rootFolder = require('../../rootPath');
+// var request = require('request');
 
 // /download/:snippetID
 
@@ -25,5 +26,15 @@ module.exports = {
           .catch(function (err) {
            res.redirect('/');
           });
+  },
+
+  exportToGist: function (snippetId) {
+    return helpers.getSnippet(snippetId)
+      .then(function (result) {
+        return utils.writeFileForGist(result.toJSON());
+      })
+      .catch(function (err) {
+        res.redirect('/');
+      });
   }
 };
