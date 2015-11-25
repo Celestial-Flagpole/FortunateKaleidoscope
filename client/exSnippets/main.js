@@ -1,5 +1,12 @@
 var blue = $('p').val()
 $('document').ready(function() {
+  $('#signin').click(function() {
+    .init({
+        client_id: "9a1a341bb29b6bf5b13e",    // replace with your own Client ID!!
+        redirect_uri: chrome.identity.getRedirectURL(),
+        response_type: "token"
+    });
+  });
   $('.addSnippet').click(function() {
     var text = $('#dropBox').val();
     $.ajax({
