@@ -49,7 +49,6 @@ module.exports = {
 
     helpers.getFollowers(username)
       .then(function (result) {
-        console.log('in usercontroller', result)
         res.json(result);
       })
       .catch(function (err) {

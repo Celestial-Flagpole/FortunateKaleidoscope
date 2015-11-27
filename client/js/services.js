@@ -81,7 +81,7 @@ angular.module('sniphub.services', [])
       data: {
         "snippetId": snippetId
       }
-    })
+      })
       .then(function successCallback (response) {
         return response;
       }, function errorCallback (response) {

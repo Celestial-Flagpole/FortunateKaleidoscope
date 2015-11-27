@@ -22,7 +22,6 @@ var writeSnippetFile = function (snipObj, outFolder) {
 };
 
 var writeFileForGist = function (snipObj) {
-  console.log(snipObj, 'snip')
     var fileName = escape(snipObj.title) + '.sublime-snippet';
     var fileContent = sublimeSnippetTemplate(snipObj);
     return {fileContent: fileContent, fileName: fileName};

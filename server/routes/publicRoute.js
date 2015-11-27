@@ -15,11 +15,12 @@ module.exports = function (app) {
       var fileName = JSON.stringify(result.fileName);
       var fileContent = result.fileContent;
       var data = {
-          "description": "TEST",
+          "description": "",
           "public": true,
           "files": {}
         };
         data["files"]["" + fileName] = { "content": fileContent };
+        data["description"] = "Gist for " + fileName;
 
         client.post('gists', data, function (err, response, body) {
           if (err) {

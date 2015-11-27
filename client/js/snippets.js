@@ -39,13 +39,17 @@ angular.module('sniphub.snippets', ['hljs'])
     user = $scope.loggedInUser;
     // Only forks if the user is not the same as the forked from.
     if (user !== forkedFrom) {
-      //call the factory function with new user and forkedFrom data
+      // Get the tag(s) for the current snippet. We have to do a sanity check on whether the tags passed in
+      // is an Array or a string list of tags. We want to send the factory an array of tags, so need to 
+      // convert to an array if needed.
       if (Array.isArray(tags)) {
         var tagsArray = tags;
       } else {
         var tagsArray = tags.split(',');
       }
-      SniphubServices.forkSnippet(user, text, title, tabPrefix, tagsArray, scope, forkedFrom, snippetId).then(function (response) {
+      // Call the factory function with new user and forkedFrom data
+      SniphubServices.forkSnippet(user, text, title, tabPrefix, tagsArray, scope, forkedFrom, snippetId)
+        .then(function (response) {
         $scope.fetchTopTen();
       });
     }
@@ -67,7 +71,6 @@ angular.module('sniphub.snippets', ['hljs'])
     SniphubServices.gistSnippet(snippetId)
       .then(function (response) {
         console.log('Gist was created! WOHOOOO');
-        console.log(response);
         $window.open(response.data.body.html_url);
       });
   };
