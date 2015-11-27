@@ -45,8 +45,9 @@ module.exports = {
   },
 
   getFollowers: function (req, res) {
-    var user = req.body.user;
-    helpers.getFollowers(user)
+    var username = req.params.username;
+
+    helpers.getFollowers(username)
       .then(function (result) {
         console.log('in usercontroller', result)
         res.json(result);

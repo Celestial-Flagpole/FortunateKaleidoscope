@@ -5,7 +5,6 @@ var User = db.User;
 var Tag = db.Tag;
 var Snippet = db.Snippet;
 
-
 module.exports = {
   findOrCreateUser: function (profile) {
     return new Promise(function (resolve, reject) {
@@ -271,7 +270,7 @@ module.exports = {
   }, 
 
   getFollowers: function (user) {
-    return User.findOne({where: {username: 'iam-peekay'}})
+    return User.findOne({where: {username: user}})
             .then(function (user) {
               return user.getFollower();
             });
