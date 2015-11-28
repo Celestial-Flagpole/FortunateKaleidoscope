@@ -184,6 +184,21 @@ function getUserInfo(interactive) {
       User.login = user_info.login;
       document.getElementById('user_info').innerHTML = "<b>Hello " + User.login;
       hideButton(signin_button);
+      var user = User;
+
+    $.ajax({
+      type: "POST",
+      url: "http://localhost:3000/api/snippet",
+      data: {
+        "username" : user,
+        "text" : "hello",
+        "tabPrefix" : "test",
+        "title" : "testing with ajax",
+        "scope" : "no scope",
+        "tags" : "here",
+        "forkedFrom" : null
+       }
+    })
     } else {
       console.log('in else')
       showButton(signin_button)
@@ -223,7 +238,7 @@ function getUserInfo(interactive) {
       user_info_div = document.getElementById('user_info');
       console.log(signin_button, revoke_button, user_info_div);
       showButton(signin_button);
-      // getUserInfo(false);
+      getUserInfo(false);
     }
   };
 })();
