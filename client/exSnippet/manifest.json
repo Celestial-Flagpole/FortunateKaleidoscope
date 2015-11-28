@@ -26,6 +26,7 @@
     "identity",
     "cookies",
     "activeTab",
-    "https://github.com/login/oauth/authorize*"
+    "https://github.com/login/oauth/authorize*",
+    "http://localhost:3000"
   ]
 }

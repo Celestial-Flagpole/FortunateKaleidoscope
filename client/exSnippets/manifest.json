@@ -1,0 +1,42 @@
+{
+  "manifest_version": 2,
+
+  "name": "Snippets",
+  "description": "This extension allows you to easily save and use snippets",
+  "version": "1.0",
+  "key": "baaenjnmlaejajnalldcecpdafeggelb",
+
+  "background" : {"scripts": ["background.js"]},
+  "browser_action": {
+    "default_icon": "scissors.png",
+    "default_popup":"window.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "css":[ ],
+      "js": ["client/js/vendor/jquery/dist/jquery.min.js", "content.js" ],
+      "run_at": "document_end",
+      "all_frames": false
+    }
+  ],
+  "permissions": [
+    "storage",
+    "identity",
+    "cookies",
+    "https://sniphub.herokuapp.com"
+    "<all_urls>",
+    "activeTab",
+    "https://github.com/login/oauth/authorize*",
+    "https://ajax.googleapis.com/",
+    "http://sniphub.herokuapp.com/",
+    "http://localhost:3000/auth/github",
+    "https://docs.google.com/feeds/*",
+  "https://www.google.com/accounts/OAuthGetRequestToken",
+  "https://www.google.com/accounts/OAuthAuthorizeToken",
+  "https://www.google.com/accounts/OAuthGetAccessToken"
+  ]
+}

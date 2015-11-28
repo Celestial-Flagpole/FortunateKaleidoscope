@@ -7,8 +7,7 @@ var gh = (function() {
   var access_token;
   var User = {
     id:'',
-    firstname:'',
-    familyname:'',
+    login:'',
     email:''
   };
   var tokenFetcher = (function() {
@@ -61,11 +60,16 @@ var gh = (function() {
           return values;
         }
         function handleProviderResponse(values) {
-          if (values.hasOwnProperty('acces-token'))
+          console.log("in handleProvider")
+          console.log(values)
+          if (values.hasOwnProperty('access-token')) {
+            console.log('in handleProvider: ', values.access_token);
             setAccesstoken(values.access_token);
-          else if (values.hasOwnProperty('code'))
+          } else if (values.hasOwnProperty('code')) {
             exchangeCodeForToken(values.code);
-          else callback(newError('Neither access_token nor code available.'));
+          } else {
+            callback(newError('Neither access_token nor code available.'));
+          }
         }
 
         function exchangeCodeForToken(code) {
@@ -119,20 +123,31 @@ var gh = (function() {
     });
   }
   function requestStart() {
-    console.log("in requestStart")
+    console.log("in requestStart testing post request")
+    // chrome.cookies.set({
+    //   "name": "username",
+    //   "url": "https://sniphub.herokuapp.com/",
+    //   "expirationDate": (new Date().getTime()/1000) + 3600,
+    //   "value": "MCavataio"
+    // }, function (cookie) {
+    //   console.log(JSON.stringify(cookie));
+    // })
+    
+
     var xhr = new XMLHttpRequest();
     xhr.open(method, url);
-    xhr.setRequestHeader('Authorization', + 'Bearer' + access_token);
+    xhr.setRequestHeader('Authorization', 'Bearer ' + access_token);
     xhr.onload = requestComplete;
     xhr.send();
   }
 
   function requestComplete() {
     if (this.status != 200 && retry) {
-      console.log("in requestComplete")
+      console.log("in requestComplete *************")
       retry = false;
       tokenFetcher.removeCachedToken(access_token);
-      // access_token = null;
+
+      access_token = null;
       getToken();
     } else {
       console.log("in else requestComplete")
@@ -143,9 +158,9 @@ var gh = (function() {
 function getUserInfo(interactive) {
   console.log("accessToken in getUser: ", access_token)
   xhrWithAuth('GET',
-    'https://api.github.com/user?access_token='+access_token,
+    'https://api.github.com/user?access_token=' + access_token,
     interactive,
-    onUserInfoFetched);
+    onUserInfoFetched)
 }
   function showButton(button) {
     button.style.display = 'inline';
@@ -161,7 +176,13 @@ function getUserInfo(interactive) {
   }
   function onUserInfoFetched(error, status, response) {
     if (!error && status == 200) {
-      console.log(response)
+      
+      var user_info = JSON.parse(response);
+      User.id = user_info.id;
+      console.log(User.login)
+      User.email = user_info.email;
+      User.login = user_info.login;
+      document.getElementById('user_info').innerHTML = "<b>Hello " + User.login;
       hideButton(signin_button);
     } else {
       console.log('in else')
@@ -180,11 +201,19 @@ function getUserInfo(interactive) {
   });
 }
   function revokeToken() {
-    window.open('https://github.com/settings/applications');
+    console.log(access_token)
+    console.log(User.login)
+  var xhr = new XMLHttpRequest();
+      xhr.open('DELETE',
+        'https://github.com/settings/connections/' + User.id + '/tokens/' + access_token.access_token)
+      xhr.setRequestHeader('Authorization', 'Basic')
+        // '/applications/fbae39ece502e521f0a5/tokens/' + access_token.access_token);
+      xhr.send()
     user_info_div.textContent = '';
     hideButton(revoke_button);
     showButton(signin_button);
   }
+  
   return {
     onload: function () {
       signin_button = document.querySelector('#signin');
@@ -200,3 +229,30 @@ function getUserInfo(interactive) {
 })();
 
 window.onload = gh.onload;
+
+
+// function cookieinfo(){
+//     chrome.cookies.getAll({},function (cookie){
+//         console.log(cookie.length);
+//         allCookieInfo = "";
+//         for(i=0;i<cookie.length;i++){
+//             console.log(cookie[i]);
+
+//             if(cookie[i].domain === ".github.com" && cookie[i].value && cookie[i].name === "dotcom_user") 
+//               allCookieInfo = allCookieInfo + JSON.stringify(cookie[i]);
+//         }
+//         localStorage.github = allCookieInfo;
+//         console.log(allCookieInfo)
+//     });
+// }
+// window.onload=cookieinfo;
+
+
+
+
+
+
+
+
+
+
