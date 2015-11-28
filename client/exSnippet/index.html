@@ -3,17 +3,20 @@
   <head>
     <meta charset="UTF-8">
     <title>GitHub Auth</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
     <script type="text/javascript" src="jquery.min.js"></script>
     <script type="text/javascript" src="index.js"></script>
   </head>
   <body>
     <div id="user_info"></div>
-    <button id="signin" style="display:none">Sign in</button>
-    <button id="revoke" style="display:inline">Revoke token</button>
+    <button type="button" id="signin" style="display:none">Sign in</button>
+    <button type="button" id="revoke" style="display:inline">Revoke token</button>
     <form>
-      <input type="text" id="titleForm" placeHolder="Enter Title"/> 
-      <input type="text" id="textForm" placeholder="Add new Snippet">
-      <button type="button" class="addSnippet">Add Me</button>
+      <input type="text" id="titleForm" placeHolder="Enter Title"> 
+      <input type="text" id="textForm" placeholder="Enter Text">
+      <input type="text" id="tagsForm" placeHolder="Enter Tag">
+      <input type="text" id="tabPrefixForm" placeHolder="Enter tabPrefix">
+      <button type="button" id="addSnippet" class="addSnippet">Add Me</button>
   </form>
   </body>
 </html>

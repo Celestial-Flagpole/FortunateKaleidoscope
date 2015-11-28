@@ -4,6 +4,7 @@ var gh = (function() {
   var signin_button;
   var revoke_button;
   var user_info_div;
+  var addSnippet_button;
   var access_token;
   var User = {
     id:'',
@@ -186,19 +187,6 @@ function getUserInfo(interactive) {
       hideButton(signin_button);
       var user = User;
 
-    $.ajax({
-      type: "POST",
-      url: "http://localhost:3000/api/snippet",
-      data: {
-        "username" : user,
-        "text" : "hello",
-        "tabPrefix" : "test",
-        "title" : "testing with ajax",
-        "scope" : "no scope",
-        "tags" : "here",
-        "forkedFrom" : null
-       }
-    })
     } else {
       console.log('in else')
       showButton(signin_button)
@@ -228,6 +216,36 @@ function getUserInfo(interactive) {
     hideButton(revoke_button);
     showButton(signin_button);
   }
+
+  function writeSnippet() {
+    var title = $('#titleForm').val()
+    var text = $('#textForm').val()
+    var tags = $('#tagsForm').val()
+    var tabPrefix = $('#tabPrefixForm').val()
+    $('#titleForm').val("");
+    $('#textForm').val("");
+    $('#tagsForm').val("");
+    $('#tabPrefixForm').val("");
+    
+
+
+    console.log('titleForm', title);
+    console.log("in writeSnippet:", User);
+    var user = User;
+      $.ajax({
+      type: "POST",
+      url: "http://localhost:3000/api/snippet",
+      data: {
+        "username" : user,
+        "text" : text,
+        "tabPrefix" : tabPrefix,
+        "title" : title,
+        "scope" : "JavaScript",
+        "tags" : tags,
+        "forkedFrom" : null
+       }
+    })
+  }
   
   return {
     onload: function () {
@@ -237,6 +255,8 @@ function getUserInfo(interactive) {
       revoke_button.onclick = revokeToken;
       user_info_div = document.getElementById('user_info');
       console.log(signin_button, revoke_button, user_info_div);
+      addSnippet_button = document.querySelector('#addSnippet');
+      addSnippet_button.onclick = writeSnippet;
       showButton(signin_button);
       getUserInfo(false);
     }
