@@ -221,6 +221,7 @@ function getUserInfo(interactive) {
     var title = $('#titleForm').val()
     var text = $('#textForm').val()
     var tags = $('#tagsForm').val()
+    tags = tags.split(',');
     var description = $('#descriptionForm').val()
     $('#titleForm').val("");
     $('#textForm').val("");
@@ -230,6 +231,7 @@ function getUserInfo(interactive) {
 
 
     console.log('titleForm', title);
+    console.log('tags ')
     console.log("in writeSnippet:", User);
     var user = User;
       $.ajax({
@@ -238,7 +240,7 @@ function getUserInfo(interactive) {
       data: {
         "username" : user,
         "text" : text,
-        "tabPrefix" : description,
+        "description" : description,
         "title" : title,
         "scope" : "JavaScript",
         "tags" : tags,
