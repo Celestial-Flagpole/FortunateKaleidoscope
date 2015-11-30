@@ -1,0 +1,54 @@
+<div ng-controller="SnippetsController" id='container'>
+  <div class="sortby">
+    <select ng-model="sortorder">
+      <option value="" disabled selected>Sort By</option>
+      <option value="+createdAt" ng-model='sortSnippets'>Oldest</option>
+      <option value="-forkedCount" ng-model='sortSnippets'>Most Forked</option>
+    </select>
+  </div>
+  <input type="text" class="searchSnips" ng-model="search" placeholder="Search"></input>
+    <div class="container snipslist">
+        <ul ng-repeat="snippet in snippets | snippetFilter:search | orderBy:sortorder track by $index" class="collection">
+          <li class="collection-item blue-grey lighten-5 z-depth-5">
+            <div class="row">
+            <span class="snippet-title"> 
+              <strong>{{snippet.title}}</strong>
+            </span>
+            <a ui-sref="users({ id: snippet.user.username })">
+              <span class="floatright">
+                {{snippet.user.username}}
+              </span>
+            </a>
+            </div>
+            <div class="row">
+            <span ng-show="snippet.forkedFrom">
+              Forked from: {{snippet.forkedFrom}}
+            </span>
+            <i class="tiny mdi-action-label"></i>
+            <span ng-repeat="tag in snippet.tags">
+              {{tag}}
+            </span>
+            <span>
+              <a ui-sref="snippets" ng-click="gistSnippet(snippet.id) ">
+                <i class="tiny mdi-content-save floatright"></i>
+              </a>
+            </span>
+            <span>
+            <span ng-show="snippet.starCount" class="rating floatright" ui-sref="snippets" ng-click="starSnippet(snippet.id) ">
+              ☆ {{snippet.starCount}}
+            </span>
+            <span ui-sref="snippets" class="forking floatright" ng-click="forkSnippet( null, snippet.text, snippet.title, snippet.tabPrefix, snippet.tags, snippet.scope, snippet.user.username, snippet.id) ">
+              <strong>Ғork</strong> {{snippet.forkedCount}}
+            </span>
+          </div>
+          </li>
+        </ul> <!-- ng-repeat -->
+      </div> <!-- materilaize row -->
+    </div> <!-- materialize container -->
+</div> <!-- ng-controller -->
+
+<script>
+  $(document).ready(function() {
+    $('select').material_select();
+  });
+</script>

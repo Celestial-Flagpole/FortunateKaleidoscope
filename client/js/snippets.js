@@ -11,6 +11,8 @@ angular.module('sniphub.snippets', ['hljs'])
   };
 
   $scope.followUser = function (userToFollow, user) {
+    console.log('got here');
+    console.log(userToFollow, user);
     user = $scope.loggedInUser;
     SniphubServices.followUser(userToFollow, user)
       .then(function (response) {

@@ -17,7 +17,7 @@ angular.module('sniphub', ['ngRoute',
       url: '/snippets',
       controller: 'SnippetsController',
       views: {
-        'main' : { templateUrl: 'html/snippets.html' }
+        'main' : { templateUrl: 'html/snippets2.html' }
       }
     })
     .state('addSnippet', {
@@ -38,7 +38,7 @@ angular.module('sniphub', ['ngRoute',
       url: '/users/:id',
       controller: 'snippetsUserController',
       views: {
-        'main' : { templateUrl: 'html/snippetUser.html'}
+        'main' : { templateUrl: 'html/snippetUser2.html'}
       }
     });
 
