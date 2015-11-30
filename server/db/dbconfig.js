@@ -34,7 +34,8 @@ var Snippet = sequelize.define('snippet', {
   tabPrefix : Sequelize.STRING,
   title : Sequelize.STRING,
   scope : Sequelize.STRING,
-  forkedFrom : Sequelize.STRING
+  forkedFrom : Sequelize.STRING, 
+  starCount : Sequelize.INTEGER
 });
 
 // Tag tables are inserted for later addition of tags
@@ -60,7 +61,7 @@ Tag.belongsToMany(Snippet, { through: 'snippet_tag'});
 User.belongsToMany(User, { as: 'Follower', through: 'Followers'});
 
 sequelize
-  .sync({force: true})
+  .sync()
   .then(function (err) {
     console.log('It worked!');
     // Tag.create({tagname: 'test'})

@@ -4,6 +4,7 @@ var bodyParser = require('body-parser');
 var passport = require('./passport');
 var session = require('express-session');
 var cookieParser = require('cookie-parser');
+var cors = require('cors');
 
 if (process.env.NODE_ENV === 'production') {
   var SESSION_SECRET = process.env.SESSION_SECRET;
@@ -12,14 +13,12 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 module.exports = function (app, express) {
+  app.use(cors());
   // Logger
   app.use(morgan('dev'));
   // Parses posts requests
   app.use(bodyParser.urlencoded({extended: true}));
   app.use(bodyParser.json());
-
-  // Uses cookies for client side to use
-  app.use(cookieParser());
 
   // Establish static route
   if (process.env.NODE_ENV === 'production') {
@@ -28,11 +27,14 @@ module.exports = function (app, express) {
     app.use(express.static(__dirname + '/../../client'));
   }
 
+  // Uses cookies for client side to use
+  app.use(cookieParser());
+
   // Uses sessions
   app.use(session({
     secret: SESSION_SECRET,
     resave: false,
-    saveUninitialized: false,
+    saveUninitialized: true,
     sessionid: function (req) {
       return req.cookie.username;
     }
@@ -46,6 +48,7 @@ module.exports = function (app, express) {
   var authRoute = express.Router();
   var publicRoute = express.Router();
   var apiRoute = express.Router();
+  var userRoute = express.Router();
 
   app.use('/', publicRoute);
   require('../routes/publicRoute')(publicRoute);
@@ -55,5 +58,8 @@ module.exports = function (app, express) {
 
   app.use('/api', apiRoute);
   require('../routes/apiRoute')(apiRoute);
+
+  // app.use('/user', userRoute);
+  // require('../routes/userRoute')(userRoute);
 
 };

@@ -16,10 +16,10 @@ angular.module('sniphub.services', [])
     });
   };
 
+
   var addSnippet = function ( user, text, title, tabPrefix, tags, scope, forkedFrom ) {
     //If it doesn't have a forkedFrom, set to null
     forkedFrom = forkedFrom || null;
-
     return $http({
       method: 'POST',
       url: '/api/snippet',
@@ -38,6 +38,57 @@ angular.module('sniphub.services', [])
     });
   };
 
+  var forkSnippet = function ( user, text, title, tabPrefix, tags, scope, forkedFrom, snippetId ) {
+
+    return $http({
+      method: 'POST',
+      url: '/api/snippet/fork',
+      data: {
+        "username" : user,
+        "text" : text,
+        "tabPrefix" : tabPrefix,
+        "title" : title,
+        "scope" : scope,
+        "tags": tags,
+        "forkedFrom" : forkedFrom,
+        "id": snippetId
+       }
+    }).then(function successCallback ( response ) {
+      console.log("after success");
+      return response;
+    });
+  };
+
+  var starSnippet = function (snippetId) {
+    return $http({
+      method: 'POST',
+      url: '/api/snippet/star',
+      data: {
+        "id": snippetId
+      }
+    })
+      .then(function successCallback (response) {
+        return response;
+      }, function errorCallback (response) {
+      console.log('Error in starring snippet in db')
+    });
+  };
+
+  var gistSnippet = function (snippetId) {
+    return $http({
+      method: 'POST',
+      url: '/download/gist',
+      data: {
+        "snippetId": snippetId
+      }
+      })
+      .then(function successCallback (response) {
+        return response;
+      }, function errorCallback (response) {
+        console.log('Error in creating a gist :(');
+      });
+  };
+
   var updateSnippet = function ( snippetId, user, text, title, tabPrefix, tags, scope, forkedFrom ) {
     forkedFrom = forkedFrom || null;
     return $http({
@@ -49,7 +100,7 @@ angular.module('sniphub.services', [])
         "tabPrefix" : tabPrefix,
         "title" : title,
         "scope" : scope,
-        "tags" : [tags],
+        "tags" : tags,
         "forkedFrom" : forkedFrom
        }
     }).then(function successCallback ( response ) {
@@ -114,7 +165,6 @@ angular.module('sniphub.services', [])
       method: 'GET', 
       url: '/api/user/' + user + '/follow'
     }).then (function successCallback (response) {
-      console.log('in service:', response)
       return response;
     }, function errorCallback (response) {
       console.log('Error in getting followers from db');
@@ -129,7 +179,10 @@ angular.module('sniphub.services', [])
     fetchByUser: fetchByUser,
     searchByTerm : searchByTerm,
     followUser: followUser,
-    getFollowers: getFollowers
+    getFollowers: getFollowers,
+    forkSnippet: forkSnippet,
+    starSnippet: starSnippet,
+    gistSnippet: gistSnippet
   };
 })
 .factory('Auth', function ($http, $location, $window) {

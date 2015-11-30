@@ -9,6 +9,8 @@ module.exports = function (app) {
   app.get('/topten', apiController.getTopTen);
   app.post('/search', apiController.searchSnips);
   app.post('/snippet', authMiddleware, apiController.writeSnippet);
+  app.post('/snippet/fork', authMiddleware, apiController.forkSnippet);
+  app.post('/snippet/star', apiController.starSnippet);
   app.use('/user', userRoute);
   require('./userRoute')(userRoute);
 };
