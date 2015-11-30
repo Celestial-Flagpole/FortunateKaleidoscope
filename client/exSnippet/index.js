@@ -238,7 +238,7 @@ function getUserInfo(interactive) {
       data: {
         "username" : user,
         "text" : text,
-        "description" : description,
+        "tabPrefix" : description,
         "title" : title,
         "scope" : "JavaScript",
         "tags" : tags,
