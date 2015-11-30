@@ -1,9 +1,12 @@
 <div ng-controller="SnippetsUserController" id='container' >
-    <div class="container">
       <a href="/api/user/{{username}}/download" class="btn waves-effect waves-light orange grey-text text-darken-4">
         <i class="mdi-content-archive">&nbsp;&nbsp;</i>
         Download All
       </a>
+      <span>
+        <a ng-click="followUser(username, null)" class="btn waves-effect waves-light orange grey-text text-darken-4">Follow Me</a>
+      </span>
+      <div class="container">
       <div class="row">
         <div ng-repeat="snippet in snippets" class="snippet">
           <div class="col s6">

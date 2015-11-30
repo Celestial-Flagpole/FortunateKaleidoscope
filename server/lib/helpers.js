@@ -36,7 +36,6 @@ module.exports = {
   writeSnippet: function (req, cb) {
     // takes the array of body tags and turns them into objects
     // Parses snippet
-    console.log(req.body)
     var snippet = escape(req.body.text);
     var languageScope = req.body.scope;
     var snipTitle = escape(req.body.title);
@@ -217,7 +216,7 @@ module.exports = {
       limit: 20,
       order: 'createdAt DESC',
       include: [
-      { model: User}, 
+      { model: User }, 
       { model: Tag }
       ]
     }).then(function (result) {
@@ -236,9 +235,10 @@ module.exports = {
         where : {
           userId : id
         },
-        include: [{
-          model: User
-        }]
+        include: [
+        { model: User },
+        { model: Tag }
+        ]
       }).then(function (result) {
         //We are good here;
         cb(null, result);

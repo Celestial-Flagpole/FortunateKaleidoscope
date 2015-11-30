@@ -1,4 +1,4 @@
-<div ng-controller='EditSnippetController' id='container'>
+<div ng-controller='EditSnippetController' class='add-editSnippet'>
   <div class="row">
     <form class="col s12" ng-submit='updateSnippet(snippetId,userField, inputEntry, titleField , tabField, tagField, scope)'name ="AddSnippetForm">
       <div class="row">
@@ -78,7 +78,7 @@
         </div>
         <div class="input-field col s4">
           <input required type="text" class="validate text" type="text" name="text" ng-model='tabField'>
-          <label for="last_name">Tab Prefix</label>
+          <label for="tabs">Tab</label>
         </div>
         <div class="input-field col s4">
           <input required type="text" class="validate text" type="text" name="text" ng-model='tagField'>
