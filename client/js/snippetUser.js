@@ -19,6 +19,9 @@ $scope.fetchByUser = function ( user ) {
         $scope.snippets.forEach(function (item) {
           item.text = unescape(item.text);
           item.title = unescape(item.title);
+          item.tags = item.tags.map(function (tag) {
+            return tag.tagname;
+          });
         });
       });
   };
@@ -33,6 +36,16 @@ $scope.fetchByUser = function ( user ) {
         }
         console.log($scope.followers)
       })
+  };
+
+  $scope.followUser = function (userToFollow, user) {
+    console.log('got here');
+    console.log(userToFollow, user);
+    user = $scope.loggedInUser;
+    SniphubServices.followUser(userToFollow, user)
+      .then(function (response) {
+        // TODO: DO SOMETHING;
+      });
   };
 
   $scope.$watch('$viewContentLoaded', function () {
