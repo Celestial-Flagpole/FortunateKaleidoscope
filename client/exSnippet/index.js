@@ -221,11 +221,11 @@ function getUserInfo(interactive) {
     var title = $('#titleForm').val()
     var text = $('#textForm').val()
     var tags = $('#tagsForm').val()
-    var tabPrefix = $('#tabPrefixForm').val()
+    var description = $('#descriptionForm').val()
     $('#titleForm').val("");
     $('#textForm').val("");
     $('#tagsForm').val("");
-    $('#tabPrefixForm').val("");
+    $('#descriptionForm').val("");
     
 
 
@@ -238,7 +238,7 @@ function getUserInfo(interactive) {
       data: {
         "username" : user,
         "text" : text,
-        "tabPrefix" : tabPrefix,
+        "description" : description,
         "title" : title,
         "scope" : "JavaScript",
         "tags" : tags,
