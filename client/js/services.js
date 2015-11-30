@@ -81,7 +81,7 @@ angular.module('sniphub.services', [])
       data: {
         "snippetId": snippetId
       }
-    })
+      })
       .then(function successCallback (response) {
         return response;
       }, function errorCallback (response) {
@@ -165,7 +165,6 @@ angular.module('sniphub.services', [])
       method: 'GET', 
       url: '/api/user/' + user + '/follow'
     }).then (function successCallback (response) {
-      console.log('in service:', response)
       return response;
     }, function errorCallback (response) {
       console.log('Error in getting followers from db');

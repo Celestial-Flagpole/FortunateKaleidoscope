@@ -48,6 +48,7 @@ module.exports = function (app, express) {
   var authRoute = express.Router();
   var publicRoute = express.Router();
   var apiRoute = express.Router();
+  var userRoute = express.Router();
 
   app.use('/', publicRoute);
   require('../routes/publicRoute')(publicRoute);
@@ -57,5 +58,8 @@ module.exports = function (app, express) {
 
   app.use('/api', apiRoute);
   require('../routes/apiRoute')(apiRoute);
+
+  // app.use('/user', userRoute);
+  // require('../routes/userRoute')(userRoute);
 
 };

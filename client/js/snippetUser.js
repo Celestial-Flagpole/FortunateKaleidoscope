@@ -26,7 +26,11 @@ $scope.fetchByUser = function ( user ) {
   $scope.getFollowers = function (user) {
     SniphubServices.getFollowers(user)
       .then(function (response) {
-        $scope.followers = [response.data[0].Followers];
+        if (response.data[0] === undefined) {
+          $scope.followers = [];
+        } else {
+          $scope.followers = [response.data[0].Followers];          
+        }
         console.log($scope.followers)
       })
   };

@@ -5,7 +5,6 @@ var User = db.User;
 var Tag = db.Tag;
 var Snippet = db.Snippet;
 
-
 module.exports = {
   findOrCreateUser: function (profile) {
     return new Promise(function (resolve, reject) {
@@ -215,7 +214,7 @@ module.exports = {
   getSnippetsMostRecent: function () {
     //Search all snippets, limit 10, ordered by createdAt date
     return Snippet.findAll({
-      limit: 10,
+      limit: 20,
       order: 'createdAt DESC',
       include: [
       { model: User}, 
@@ -271,7 +270,7 @@ module.exports = {
   }, 
 
   getFollowers: function (user) {
-    return User.findOne({where: {username: 'iam-peekay'}})
+    return User.findOne({where: {username: user}})
             .then(function (user) {
               return user.getFollower();
             });
