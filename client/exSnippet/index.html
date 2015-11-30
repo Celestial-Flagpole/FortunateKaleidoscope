@@ -8,14 +8,15 @@
     <script type="text/javascript" src="index.js"></script>
   </head>
   <body>
+    <h1>SnipHub</h1>
     <div id="user_info"></div>
     <button type="button" id="signin" style="display:none">Sign in</button>
     <button type="button" id="revoke" style="display:inline">Revoke token</button>
     <form>
-      <input type="text" id="titleForm" placeHolder="Enter Title"> 
-      <input type="text" id="textForm" placeholder="Enter Text">
-      <input type="text" id="tagsForm" placeHolder="Enter Tag">
-      <input type="text" id="tabPrefixForm" placeHolder="Enter tabPrefix">
+      <input type="text" id="titleForm" class="textBox" placeHolder="Enter Title"> 
+      <input type="text" id="tagsForm" class="textBox" placeHolder="Enter Tag">
+      <input type="text" id="tabPrefixForm" class="textBox" placeHolder="Enter tabPrefix">
+      <textarea rows="6" cols="50" id="textForm" class="textBox text" placeholder="Enter Text"></textarea>
       <button type="button" id="addSnippet" class="addSnippet">Add Me</button>
   </form>
   </body>

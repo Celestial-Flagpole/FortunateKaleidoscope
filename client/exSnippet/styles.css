@@ -7,9 +7,18 @@ p {
   color: white;
   font-size: 20px;
 }
-/*.dropBox {
-  position: relative;
-  height: 120px;
-  width: 250px;
-  left: 10px;
-}*/
+h1{
+  color: white;
+  font-size: 25px;
+}
+#textForm{
+  display: inline-block;
+}
+.textBox {
+  border-radius: 5px;
+}
+.text {
+  border-radius: 5px;
+  border: 1px solid #999999; 
+  padding: 5px;
+}
