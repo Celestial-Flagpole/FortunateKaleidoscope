@@ -4,7 +4,9 @@ var request = require('request-json');
 var client = request.createClient('https://api.github.com/');
 
 module.exports = function (app) {
-  app.get('/download/:snippetId', publicController.downloadSnippet);
+  app.get('/download/atom/:snippetId', publicController.downloadAtomSnippet);
+  // app.get('/download/:snippetId', publicController.downloadSnippet);
+  app.get('/download/:snippetId', publicController.downloadAtomSnippet);
 
   app.post('/download/gist', function (req, res) {
   var username = 'iam-peekay';
@@ -26,13 +28,6 @@ module.exports = function (app) {
           if (err) {
             console.error(err);
           } else {
-            
-            res.set({
-              'Access-Control-Allow-Origin': '*',
-              'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE',
-              'Access-Control-Allow-Headers': 'X-Requested-With,Content-Type,Authorization'
-            }); 
-            console.log(response)
             res.json(response);
             // res.redirect(response.body.html_url);
           }

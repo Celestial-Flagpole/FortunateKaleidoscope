@@ -34,6 +34,13 @@ angular.module('sniphub', ['ngRoute',
         'main' : { templateUrl: 'html/editSnippet.html' }
       }
     })
+    .state('snippet', {
+      url: '/users/:id/:snippetId',
+      controller: 'SnippetController',
+      views: {
+        'main' : { templateUrl: 'html/snippet.html' }
+      }
+    })
     .state('users', {
       url: '/users/:id',
       controller: 'snippetsUserController',

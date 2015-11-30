@@ -28,6 +28,30 @@ module.exports = {
           });
   },
 
+  downloadAtomSnippet: function (req, res) {
+    console.log("ATOM SNIPPET");
+    var snippetID = req.params.snippetId;
+    console.log(snippetID);
+    var folder = rootFolder + '/server/tmp/' + Date.now() + '/';
+    helpers.getSnippet(snippetID)
+            .then(function (result) {
+              console.log("RESULT", result);
+              utils.writeSnippetFileAtom(result.toJSON(), folder).then(function (file) {
+                console.log("FILE", JSON.stringify(file));
+                res.download(file.filePath, file.fileName, function (err) {
+                if (err) {
+                  console.log(err);
+                }
+                utils.cleanFolder(folder);
+              });
+            });
+           })
+          .catch(function (err) {
+            console.log("ERROR", err);
+           res.redirect('/');
+          });
+  },
+
   exportToGist: function (snippetId) {
     return helpers.getSnippet(snippetId)
       .then(function (result) {

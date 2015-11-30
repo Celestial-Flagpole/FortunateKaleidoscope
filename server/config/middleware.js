@@ -4,7 +4,6 @@ var bodyParser = require('body-parser');
 var passport = require('./passport');
 var session = require('express-session');
 var cookieParser = require('cookie-parser');
-var cors = require('cors');
 
 if (process.env.NODE_ENV === 'production') {
   var SESSION_SECRET = process.env.SESSION_SECRET;
@@ -13,7 +12,6 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 module.exports = function (app, express) {
-  app.use(cors());
   // Logger
   app.use(morgan('dev'));
   // Parses posts requests
