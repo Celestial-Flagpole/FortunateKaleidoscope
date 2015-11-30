@@ -1,9 +1,10 @@
 // FIX ALL THIS
 angular.module('sniphub.snippets', ['hljs'])
 
-.controller('SnippetsController', function (Auth, $scope, $location, SniphubServices) {
+.controller('SnippetsController', function (Auth, $scope, $location, $window, SniphubServices) {
   $scope.snippets = [];
   $scope.followers = [];
+  $scope.stars = [];
   
   $scope.getUsername = function () {
     $scope.loggedInUser = Auth.isAuth('username');
@@ -16,15 +17,6 @@ angular.module('sniphub.snippets', ['hljs'])
         // TODO: DO SOMETHING;
       });
   };
-
-  // MOVE TO SNIPPETUSER controller
-  // $scope.getFollowers = function (user) {
-  //   user = $scope.loggedInUser;
-  //   SniphubServices.getFollower(user)
-  //     .then(function (response) {
-  //       $scope.followers = response.data;
-  //     })
-  // };
 
   $scope.fetchTopTen = function () {
     //call factory function
@@ -47,16 +39,40 @@ angular.module('sniphub.snippets', ['hljs'])
     user = $scope.loggedInUser;
     // Only forks if the user is not the same as the forked from.
     if (user !== forkedFrom) {
-      //call the factory function with new user and forkedFrom data
+      // Get the tag(s) for the current snippet. We have to do a sanity check on whether the tags passed in
+      // is an Array or a string list of tags. We want to send the factory an array of tags, so need to 
+      // convert to an array if needed.
       if (Array.isArray(tags)) {
         var tagsArray = tags;
       } else {
         var tagsArray = tags.split(',');
       }
-      SniphubServices.forkSnippet(user, text, title, tabPrefix, tagsArray, scope, forkedFrom, snippetId).then(function (response) {
+      // Call the factory function with new user and forkedFrom data
+      SniphubServices.forkSnippet(user, text, title, tabPrefix, tagsArray, scope, forkedFrom, snippetId)
+        .then(function (response) {
         $scope.fetchTopTen();
       });
     }
+  };
+
+  $scope.starSnippet = function (snippetId) {
+    SniphubServices.starSnippet(snippetId)
+      .then(function (response) {
+        $scope.snippets.forEach(function (snippet) {
+          if (snippet.id === response.data.id) {
+            snippet.starCount = response.data.starCount;
+          }
+        });
+        console.log('Snippet was starred!*', response.data);
+      });
+  };
+
+  $scope.gistSnippet = function (snippetId) {
+    SniphubServices.gistSnippet(snippetId)
+      .then(function (response) {
+        console.log('Gist was created! WOHOOOO');
+        $window.open(response.data.body.html_url);
+      });
   };
 
   //call once upon app load

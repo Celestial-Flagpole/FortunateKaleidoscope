@@ -5,7 +5,6 @@ var User = db.User;
 var Tag = db.Tag;
 var Snippet = db.Snippet;
 
-
 module.exports = {
   findOrCreateUser: function (profile) {
     return new Promise(function (resolve, reject) {
@@ -36,10 +35,8 @@ module.exports = {
 
   writeSnippet: function (req, cb) {
     // takes the array of body tags and turns them into objects
-    // var tags = req.body.tags.map(function (tag) {
-    //   return { tagname: tag };
-    // });
     // Parses snippet
+    console.log(req.body)
     var snippet = escape(req.body.text);
     var languageScope = req.body.scope;
     var snipTitle = escape(req.body.title);
@@ -104,13 +101,10 @@ module.exports = {
     var snippetId = req.body.id;
     var tags = req.body.tags;
     // Update our snippet's fork count
-    console.log('tags', tags)
     Snippet.findOne({
       where: { id: snippetId }
     })
       .then(function (snippet) {
-        console.log(snippet.dataValues.forkedCount);
-        console.log('snippet')
         var newCount = snippet.dataValues.forkedCount + 1;
         snippet.update({forkedCount: newCount });
       });
@@ -160,6 +154,23 @@ module.exports = {
       console.log(err.message);
       cb(err, null);
     });
+  },
+
+  starSnippet: function (req, cb) {
+    var snippetId = req.body.id;
+    Snippet.findOne({
+      where: { id: snippetId }
+    })
+      .then(function (snippet) {
+        var newCount = snippet.dataValues.starCount === undefined ? 0 :  snippet.dataValues.starCount + 1;
+        return snippet.update({starCount: newCount })
+        .then(function (snippet) {
+          cb(null, snippet);
+        })
+      })
+      .catch(function (err) {
+        cb (err, null);
+      });
   },
 
   getSnippet: function (snippetID) {
@@ -259,7 +270,7 @@ module.exports = {
   }, 
 
   getFollowers: function (user) {
-    return User.findOne({where: {username: 'iam-peekay'}})
+    return User.findOne({where: {username: user}})
             .then(function (user) {
               return user.getFollower();
             });

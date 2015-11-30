@@ -34,7 +34,8 @@ var Snippet = sequelize.define('snippet', {
   tabPrefix : Sequelize.STRING,
   title : Sequelize.STRING,
   scope : Sequelize.STRING,
-  forkedFrom : Sequelize.STRING
+  forkedFrom : Sequelize.STRING, 
+  starCount : Sequelize.INTEGER
 });
 
 // Tag tables are inserted for later addition of tags

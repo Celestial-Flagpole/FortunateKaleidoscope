@@ -1,6 +1,5 @@
 <div ng-controller="SnippetsController" id='container'>
-  <div>{{snippets}}</div>
-  <div class = "sortby">
+  <div class="sortby">
     <select ng-model="sortorder">
       <option value="" disabled selected>Sort By</option>
       <option value="+createdAt" ng-model='sortSnippets'>Oldest</option>
@@ -21,6 +20,9 @@
                 <span ng-show="snippet.forkedCount" class="pink-text text-accent-4 right">
                   Forked count: {{snippet.forkedCount}}
                 </span>
+                <span ng-show="snippet.starCount" class="pink-text text-accent-4 right">
+                  Stars: {{snippet.starCount}}
+                </span>
               </div>
                 <div hljs hljs-language="javascript" hljs-source="snippet.text" ></div>
               <div class="card-action grey darken-3">
@@ -34,6 +36,12 @@
                 </span>
                 <span>
                   <a ui-sref="snippets" ng-click="forkSnippet( null, snippet.text, snippet.title, snippet.tabPrefix, snippet.tags, snippet.scope, snippet.user.username, snippet.id) ">Fork</a>
+                </span>
+                <span>
+                  <a ui-sref="snippets" ng-click="gistSnippet(snippet.id) ">Gist it</a>
+                </span>
+                <span>
+                  <a ui-sref="snippets" ng-click="starSnippet(snippet.id) ">Star</a>
                 </span>
                 <span>
                   <a ng-show="snippet.user.username === loggedInUser" ui-sref="editSnippet({ id: loggedInUser, snippetId: snippet.id})">Edit<a>

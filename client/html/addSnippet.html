@@ -1,4 +1,4 @@
-<div ng-controller='AddSnippetController' id='container'>
+<div ng-controller='AddSnippetController' id='addSnippet'>
   <div class="row">
     <form class="col s12" ng-submit='postSnippet(userField, inputEntry, titleField , tabField, tagField, scope)'name ="AddSnippetForm">
       <div class="row">
@@ -78,7 +78,7 @@
         </div>
         <div class="input-field col s4">
           <input required type="text" class="validate text" type="text" name="text" ng-model='tabField'>
-          <label for="last_name">Tab Prefix</label>
+          <label for="last_name">Description</label>
         </div>
         <div class="input-field col s4">
           <input required type="text" class="validate text" type="text" name="text" ng-model='tagField'>
@@ -91,7 +91,7 @@
 
           <label for="textarea1">Snippet</label>
         </div>
-        <button class="btn waves-effect waves-light orange grey-text text-darken-4" type="submit" name="action">Add Snippet
+        <button class="btn" type="submit" name="action">Add Snippet
         <i class="material-icons right"></i>
         </button>
       </div>
