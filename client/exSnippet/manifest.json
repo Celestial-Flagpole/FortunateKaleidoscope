@@ -1,0 +1,32 @@
+{
+  "manifest_version": 2,
+
+  "name": "Snippets",
+  "description": "This extension allows you to easily save and use snippets",
+  "version": "1.0",
+  // "key": "baaenjnmlaejajnalldcecpdafeggelb",
+  "browser_action": {
+    "default_popup":"index.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "css":[ ],
+      "js": ["index.js"],
+      "run_at": "document_end",
+      "all_frames": false
+    }
+  ],
+  "permissions": [
+    "cookies",
+    "storage",
+    "identity",
+    "cookies",
+    "activeTab",
+    "https://github.com/login/oauth/authorize*",
+    "http://localhost:3000"
+  ]
+}
