@@ -21,6 +21,8 @@ var writeSnippetFile = function (snipObj, outFolder) {
   });
 };
 
+// Takes a snippet and makes the path then writes a generated snippet to the folder
+// Returns the file content and file name, which Github API requires to create a new Github Gist
 var writeFileForGist = function (snipObj) {
     var fileName = escape(snipObj.title) + '.sublime-snippet';
     var fileContent = sublimeSnippetTemplate(snipObj);

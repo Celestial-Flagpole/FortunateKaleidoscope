@@ -6,6 +6,11 @@
       <span>
         <a ng-click="followUser(username, null)" class="btn waves-effect waves-light orange grey-text text-darken-4">Follow Me</a>
       </span>
+      <span>
+        <a ng-repeat="followers">
+          {{follower.name}}
+        </a>
+      </span>
       <div class="container">
       <div class="row">
         <div ng-repeat="snippet in snippets" class="snippet">
