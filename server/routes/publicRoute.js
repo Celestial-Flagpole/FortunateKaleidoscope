@@ -5,7 +5,9 @@ var request = require('request-json');
 var client = request.createClient('https://api.github.com/');
 
 module.exports = function (app) {
+  app.get('/download/atom/:snippetId', publicController.downloadAtomSnippet);
   app.get('/download/:snippetId', publicController.downloadSnippet);
+  // app.get('/download/:snippetId', publicController.downloadAtomSnippet);
 
   // First constructs a file that can be sent to Github API to create a Gist with
   // Then builds up the data object that Github requires for creating a Gist

@@ -11,9 +11,11 @@
         <ul ng-repeat="snippet in snippets | snippetFilter:search | orderBy:sortorder track by $index" class="collection">
           <li class="collection-item blue-grey lighten-5 z-depth-5">
             <div class="row">
-            <span class="snippet-title"> 
-              <strong>{{snippet.title}}</strong>
-            </span>
+            <a ui-sref="snippet({ id: loggedInUser, snippetId: snippet.id})">
+              <span class="snippet-title"> 
+                <strong>{{snippet.title}}</strong>
+              </span>
+            </a>
             <a ui-sref="users({ id: snippet.user.username })">
               <span class="floatright">
                 {{snippet.user.username}}

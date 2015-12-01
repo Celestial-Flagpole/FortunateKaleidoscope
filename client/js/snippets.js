@@ -37,7 +37,6 @@ angular.module('sniphub.snippets', ['hljs'])
 
   $scope.forkSnippet = function (user, text, title, tabPrefix, tags, scope, forkedFrom, snippetId) {
     //calls the auth cookie parser to get the currently logged in username.
-    console.log('snippets controller', tags)
     user = $scope.loggedInUser;
     // Only forks if the user is not the same as the forked from.
     if (user !== forkedFrom) {

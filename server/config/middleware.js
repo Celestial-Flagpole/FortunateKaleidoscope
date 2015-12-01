@@ -5,7 +5,6 @@ var bodyParser = require('body-parser');
 var passport = require('./passport');
 var session = require('express-session');
 var cookieParser = require('cookie-parser');
-var cors = require('cors');
 
 // Establish session key
 if (process.env.NODE_ENV === 'production') {
@@ -16,7 +15,7 @@ if (process.env.NODE_ENV === 'production') {
 
 module.exports = function (app, express) {
   // Cors headers middleware
-  app.use(cors());
+  //app.use(cors());
   // Logger middleware
   app.use(morgan('dev'));
   // Parses posts requests

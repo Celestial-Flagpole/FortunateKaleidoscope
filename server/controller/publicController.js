@@ -25,6 +25,29 @@ module.exports = {
           });
   },
 
+  downloadAtomSnippet: function (req, res) {
+    var snippetID = req.params.snippetId;
+    console.log(snippetID);
+    var folder = rootFolder + '/server/tmp/' + Date.now() + '/';
+    helpers.getSnippet(snippetID)
+            .then(function (result) {
+              console.log("RESULT", result);
+              utils.writeSnippetFileAtom(result.toJSON(), folder).then(function (file) {
+                console.log("FILE", JSON.stringify(file));
+                res.download(file.filePath, file.fileName, function (err) {
+                if (err) {
+                  console.log(err);
+                }
+                utils.cleanFolder(folder);
+              });
+            });
+           })
+          .catch(function (err) {
+            console.log("ERROR", err);
+           res.redirect('/');
+          });
+  },
+
 // Takes a snippet ID and does a look up in the database
 // Writes the snippet to a file so that it can then be used to create a Github Gist
   exportToGist: function (snippetId) {
