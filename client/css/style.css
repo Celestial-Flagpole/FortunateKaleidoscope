@@ -46,12 +46,16 @@ nav .brand-logo {
 
 .snipslist {
   margin-top: 10px;
-  padding-top: 80px;
+  padding-top: 60px;
+  width: 60%;
+  float: right;
+  position: relative;
 }
 
 .floatright {
   float: right;
   padding-right: 10px;
+  margin-right: 3px;
 }
 
 .tagimg {
@@ -65,4 +69,12 @@ nav .brand-logo {
 
 .snippet-title {
   font-size: 1.2em;
+}
+
+.followerslist {
+  margin-top: 10px;
+  padding-top: 60px;
+  padding-left: 50px;
+  width: 30%;
+  float: left;
 }

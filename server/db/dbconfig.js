@@ -1,10 +1,9 @@
 // # Database configuration
 
-//We use sequelize ORM to connect to MySql database.
-//Credentials for the database are stored in /lib/secrets.js
-//To use with your own database recreate the file and export an
-//object with the key 'sql' and your password as the value
-
+// We use sequelize ORM to connect to MySql database.
+// Credentials for the database are stored in /lib/secrets.js
+// To use with your own database recreate the file and export an
+// object with the key 'sql' and your password as the value
 
 // Declare dependencies
 var Sequelize = require('sequelize');
@@ -12,7 +11,7 @@ if (process.env.NODE_ENV === 'production') {
   var sequelize = new Sequelize(process.env.CLEARDB_DATABASE_URL);
 } else {
   var secret = require('../lib/secrets').sql;
-  var sequelize = new Sequelize('sniphub', 'root', '1234');
+  var sequelize = new Sequelize('sniphub', 'root', 'x0x0x0x0P');
 }
 var mysql = require('mysql');
 
@@ -64,22 +63,9 @@ sequelize
   .sync()
   .then(function (err) {
     console.log('It worked!');
-    // Tag.create({tagname: 'test'})
-    //   .then (function (tag) {
-    //     console.log('tag', tag)
-    //     Snippet.create({text: 'adfasdfasdf'})
-    //     .then (function (snippet) {
-    //       console.log('snippet', snippet)
-    //       snippet.addTag(tag);
-    //     })
-    //   });
   }, function (err) {
     console.log('An error occurred while creating the table:', err);
   });
-// Snippet.sync();
-// User.sync();
-// Tag.sync();
-
 
 
 module.exports = {

@@ -2,12 +2,9 @@
 var utils = require('../lib/utils');
 var helpers = require('../lib/helpers');
 var rootFolder = require('../../rootPath');
-// var request = require('request');
 
-// /download/:snippetID
-
-// Takes the snippet ID and does a look up
-// when it finds the Snippet, it writes it to file, then sends it out as a download
+// Takes the snippet ID and does a look up in the database
+// When it finds the Snippet, it writes it to file, then sends it out as a download
 module.exports = {
   downloadSnippet: function (req, res) {
     var snippetID = req.params.snippetId;
@@ -28,6 +25,7 @@ module.exports = {
           });
   },
 
+<<<<<<< HEAD
   downloadAtomSnippet: function (req, res) {
     var snippetID = req.params.snippetId;
     console.log(snippetID);
@@ -51,6 +49,8 @@ module.exports = {
           });
   },
 
+// Takes a snippet ID and does a look up in the database
+// Writes the snippet to a file so that it can then be used to create a Github Gist
   exportToGist: function (snippetId) {
     return helpers.getSnippet(snippetId)
       .then(function (result) {

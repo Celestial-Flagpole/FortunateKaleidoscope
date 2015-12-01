@@ -22,6 +22,7 @@ var writeSnippetFile = function (snipObj, outFolder) {
   });
 };
 
+<<<<<<< HEAD
 var writeSnippetFileAtom = function (snipObj, outFolder) {
   var fileName = escape(snipObj.title) + '.cson';
   var filePath = outFolder + fileName;
@@ -34,6 +35,10 @@ var writeSnippetFileAtom = function (snipObj, outFolder) {
   });
 };
 
+=======
+// Takes a snippet and makes the path then writes a generated snippet to the folder
+// Returns the file content and file name, which Github API requires to create a new Github Gist
+>>>>>>> cb5e0cb3c159ff21dfc3cd5a20696ec03477b195
 var writeFileForGist = function (snipObj) {
     var fileName = escape(snipObj.title) + '.sublime-snippet';
     var fileContent = sublimeSnippetTemplate(snipObj);
