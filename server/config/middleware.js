@@ -15,7 +15,7 @@ if (process.env.NODE_ENV === 'production') {
 
 module.exports = function (app, express) {
   // Cors headers middleware
-  app.use(cors());
+  //app.use(cors());
   // Logger middleware
   app.use(morgan('dev'));
   // Parses posts requests

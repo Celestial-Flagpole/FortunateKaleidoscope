@@ -25,7 +25,6 @@ module.exports = {
           });
   },
 
-<<<<<<< HEAD
   downloadAtomSnippet: function (req, res) {
     var snippetID = req.params.snippetId;
     console.log(snippetID);
