@@ -6,6 +6,7 @@ var Tag = db.Tag;
 var Snippet = db.Snippet;
 
 module.exports = {
+  // Create a new user and add to database
   findOrCreateUser: function (profile) {
     return new Promise(function (resolve, reject) {
       db.User.findOrCreate({
@@ -33,16 +34,17 @@ module.exports = {
     });
   },
 
+  // Writes a new snippet to the database
   writeSnippet: function (req, cb) {
     // takes the array of body tags and turns them into objects
     // Parses snippet
-    console.log(req.body)
     var snippet = escape(req.body.text);
     var languageScope = req.body.scope;
     var snipTitle = escape(req.body.title);
     var tab = escape(req.body.tabPrefix);
     var forkedFrom = req.body.forkedFrom;
     var tags = req.body.tags;
+
     // Building snippet object to create
     var post = {
       text: snippet,
@@ -52,6 +54,7 @@ module.exports = {
       scope: languageScope,
       forkedFrom: forkedFrom
     };
+
     // Retrieves user name from request
     var user = req.user.username;
 
@@ -62,7 +65,7 @@ module.exports = {
     })
     .then(function (result) {
       post.userId = result[0].id;
-      Snippet.create(post)
+      return Snippet.create(post)
         .then(function (post) {
         // generate tag objects so that we can add them to the post
         return Promise.map(tags, function (tag) {
@@ -70,9 +73,6 @@ module.exports = {
             where: {tagname: tag}
           });
         })
-        // Tag.findOrCreate({
-        //   where: {tagname: tags[0]}
-        // })
         .then(function (tags) {
           var tagsArray = [];
           for (var i = 0; i < tags.length; i++) {
@@ -91,6 +91,7 @@ module.exports = {
     });
   },
 
+  // forks a snippet from a single user for a single snippet
   forkSnippet: function (req, cb) {
     // Parses snippet
     var snippet = escape(req.body.text);
@@ -127,7 +128,7 @@ module.exports = {
     })
     .then(function (result) {
       post.userId = result[0].id;
-      Snippet.create(post)
+      return Snippet.create(post)
         .then(function (post) {
         // generate tag objects so that we can add them to the post
         return Promise.map(tags, function (tag) {
@@ -135,9 +136,6 @@ module.exports = {
             where: {tagname: tag}
           });
         })
-        // Tag.findOrCreate({
-        //   where: {tagname: tags[0]}
-        // })
         .then(function (tags) {
           var tagsArray = [];
           for (var i = 0; i < tags.length; i++) {
@@ -193,7 +191,6 @@ module.exports = {
     var snipTitle = escape(req.body.title);
     var tab = escape(req.body.tabPrefix);
     var tags = req.body.tags;
-    // TODO: If have time, add ability to update tags for Snippet
     // Building snippet object to create
     var post = {
       text: snippet,
@@ -212,12 +209,12 @@ module.exports = {
   },
 
   getSnippetsMostRecent: function () {
-    //Search all snippets, limit 10, ordered by createdAt date
+    //Search all snippets, limit 20, ordered by createdAt date
     return Snippet.findAll({
       limit: 20,
       order: 'createdAt DESC',
       include: [
-      { model: User}, 
+      { model: User }, 
       { model: Tag }
       ]
     }).then(function (result) {
@@ -236,9 +233,10 @@ module.exports = {
         where : {
           userId : id
         },
-        include: [{
-          model: User
-        }]
+        include: [
+        { model: User },
+        { model: Tag }
+        ]
       }).then(function (result) {
         //We are good here;
         cb(null, result);
@@ -272,7 +270,16 @@ module.exports = {
   getFollowers: function (user) {
     return User.findOne({where: {username: user}})
             .then(function (user) {
-              return user.getFollower();
+              return user.getFollower()
+            })
+            .then(function (followersArray) {
+              return Promise.map(followersArray, function (followerObj) {
+                return User.findOne({where: {id: followerObj.dataValues.id}})
+              })
+              .then(function (followers) {
+                console.log('followers', followers)
+                return followers;
+              })
             });
   }
 };

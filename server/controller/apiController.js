@@ -1,9 +1,11 @@
 'use strict';
+// Controller for hangling main API requests 
 var dummyData = require('../../test/dummyData');
 var helpers = require('../lib/helpers');
 
 module.exports = {
-  getTopTen: function (req, res) {
+  // Fetches top 20 snippets from the database
+  getMostRecent: function (req, res) {
     helpers.getSnippetsMostRecent().then(function (snips) {
       var resSnips = snips.map(function (snip) {
         return snip.toJSON();
@@ -14,11 +16,7 @@ module.exports = {
     });
   },
 
-  searchSnips: function (req, res) {
-    // TODO: Search snips by tag
-    res.json(dummyData);
-  },
-
+  // Adds a new snippet to the database
   writeSnippet: function (req, res) {
     console.log('writeSnippet')
     helpers.writeSnippet(req, function () {
@@ -32,6 +30,7 @@ module.exports = {
       });
   },
 
+  // Increases star count for a snippet
   starSnippet: function (req, res) {
     helpers.starSnippet(req, function (err, snippet) {
       if (err) {
@@ -40,6 +39,10 @@ module.exports = {
         res.json(snippet);
       }
     });
-  }
+  },
+
+  searchSnips: function (req, res) {
+    res.json(dummyData);
+  },
 
 };

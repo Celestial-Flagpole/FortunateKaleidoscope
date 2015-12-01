@@ -1,6 +1,3 @@
-body {
-  background-color: #EDF2F4;
-}
 nav {
   background-color: #2B2D42;
 }
@@ -22,7 +19,7 @@ nav .brand-logo {
   margin-bottom: 80px;
 }
 
-#addSnippet {
+.add-editSnippet {
   margin: 100px 200px 100px 200px;
 }
 
@@ -32,9 +29,52 @@ nav .brand-logo {
 
 .sortby {
   float: right;
-  padding-left: 10px;
+  padding-right: 20px;
   color: gainsboro;
-  padding-bottom: 100px;
+  padding-bottom: 50px;
 }
 
+.rating:hover:before {
+   content: "\2605";
+   position: absolute;
+}
 
+.forking:hover {
+   border: solid 1px #EFEFEF;
+   box-shadow: 2px 2px 2px #888888;
+}
+
+.snipslist {
+  margin-top: 10px;
+  padding-top: 60px;
+  width: 60%;
+  float: right;
+  position: relative;
+}
+
+.floatright {
+  float: right;
+  padding-right: 10px;
+  margin-right: 3px;
+}
+
+.tagimg {
+  width: 1.7%;
+  height: 1.7%;
+}
+
+.row {
+  margin-bottom: 5px;
+}
+
+.snippet-title {
+  font-size: 1.2em;
+}
+
+.followerslist {
+  margin-top: 10px;
+  padding-top: 60px;
+  padding-left: 50px;
+  width: 30%;
+  float: left;
+}
