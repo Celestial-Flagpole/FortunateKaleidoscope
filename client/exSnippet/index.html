@@ -3,21 +3,24 @@
   <head>
     <meta charset="UTF-8">
     <title>GitHub Auth</title>
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,500' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="styles.css">
     <script type="text/javascript" src="jquery.min.js"></script>
     <script type="text/javascript" src="index.js"></script>
   </head>
   <body>
-    <h1>SnipHub</h1>
-    <div id="user_info"></div>
-    <button type="button" id="signin" style="display:none">Sign in</button>
-    <button type="button" id="revoke" style="display:inline">Revoke token</button>
-    <form>
+    <div class="header">
+      <div class="headerTitle">SnipHub</div>
+      <button type="button" class="form" id="signin" style="display:none">Sign in</button>
+      <button type="button" class="form" id="revoke" style="display:none">Revoke token</button>
+    </div>
+    <!-- <div id="user_info"></div> -->
+    <form class="form">
       <input type="text" id="titleForm" class="textBox" placeHolder="Enter Title"> 
       <input type="text" id="descriptionForm" class="textBox" placeHolder="Enter Description">
       <input type="text" id="tagsForm" class="textBox" placeHolder="Enter Tag">
-      </br><textarea rows="6" cols="50" id="textForm" class="textBox text" placeholder="Enter Text"></textarea>
-      <button type="button" id="addSnippet" class="addSnippet">Add Me</button>
+      </br><textarea rows="6" cols="40" id="textForm" class="textBox snippetText" placeholder="Enter Text"></textarea>
+      <button type="button" id="addSnippet" class="addSnippet">Add Snippet</button>
   </form>
   </body>
 </html>

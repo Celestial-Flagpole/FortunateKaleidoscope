@@ -11,7 +11,7 @@ if (process.env.NODE_ENV === 'production') {
   var sequelize = new Sequelize(process.env.CLEARDB_DATABASE_URL);
 } else {
   var secret = require('../lib/secrets').sql;
-  var sequelize = new Sequelize('sniphub', 'root', '1234');
+  var sequelize = new Sequelize('sniphub', 'root', 'null');
 }
 var mysql = require('mysql');
 
