@@ -7,6 +7,7 @@ angular.module('sniphub', ['ngRoute',
   'sniphub.auth',
   'sniphub.snippetsUser',
   'sniphub.editSnippet',
+  'sniphub.snippet',
   'sniphub.angular-ellipsis',
   'sniphub.filter'])
 .config(function ($stateProvider, $urlRouterProvider, $httpProvider) {
@@ -35,8 +36,8 @@ angular.module('sniphub', ['ngRoute',
       }
     })
     .state('snippet', {
-      url: '/users/:id/:snippetId',
-      controller: 'SnippetController',
+      url: '/snippet/:id/:snippetId',
+      controller: 'EditSnippetController',
       views: {
         'main' : { templateUrl: 'html/snippet.html' }
       }

@@ -1,11 +1,8 @@
 'use strict';
 module.exports = function (snipObj) {
-  var body = unescape(snipObj.text);
-  var scope = snipObj.scope;
-  var prefix = unescape(snipObj.tabPrefix);
-  var name = unescape(snipObj.title);
-  return "'." + scope + "':\n" +
-    "'" + name + "':" +
-    "'prefix': " + prefix +
-    "'body': " + body
+  console.log("SNIPOBJ", unescape(snipObj.text));
+  return "'." + snipObj.scope + "':\n" +
+    "\t'" + unescape(snipObj.title) + "':\n" +
+    "\t\t'prefix': " + "'" + snipObj.tabPrefix + "'\n" +
+    "\t\t'body': '" + unescape(snipObj.text) + "'";
 };

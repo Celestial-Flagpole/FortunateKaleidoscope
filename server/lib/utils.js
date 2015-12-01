@@ -46,6 +46,7 @@ var cleanFolder = function (folderPath) {
 
 module.exports = {
   writeSnippetFile: writeSnippetFile,
+  writeSnippetFileAtom: writeSnippetFileAtom,
   zipFolder: require('./promises').zipFolder,
   cleanFolder: cleanFolder,
   writeFileForGist: writeFileForGist

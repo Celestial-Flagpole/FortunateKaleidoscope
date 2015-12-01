@@ -29,7 +29,6 @@ module.exports = {
   },
 
   downloadAtomSnippet: function (req, res) {
-    console.log("ATOM SNIPPET");
     var snippetID = req.params.snippetId;
     console.log(snippetID);
     var folder = rootFolder + '/server/tmp/' + Date.now() + '/';

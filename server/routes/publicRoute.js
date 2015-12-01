@@ -5,8 +5,8 @@ var client = request.createClient('https://api.github.com/');
 
 module.exports = function (app) {
   app.get('/download/atom/:snippetId', publicController.downloadAtomSnippet);
-  // app.get('/download/:snippetId', publicController.downloadSnippet);
-  app.get('/download/:snippetId', publicController.downloadAtomSnippet);
+  app.get('/download/:snippetId', publicController.downloadSnippet);
+  // app.get('/download/:snippetId', publicController.downloadAtomSnippet);
 
   app.post('/download/gist', function (req, res) {
   var username = 'iam-peekay';
