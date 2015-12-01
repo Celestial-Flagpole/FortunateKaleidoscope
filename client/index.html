@@ -21,12 +21,12 @@
         <div class='nav-wrapper'>
           <a ui-sref="snippets" class="brand-logo center">Snip<span class="sub">Hub</span></a>
           <ul id="nav-mobile" class="right">
-            <li><a ui-sref='snippets' class='index'>Snippets</a></li>
+            <li><a ui-sref='snippets' class='index'>Public Snippets</a></li>
             <li>
               <div>
                 <li ng-model='isHere'></li>
                 <li><a ng-show="isAuth" ui-sref='addSnippet' class='create'>Add Snippet</a></li>
-                <li><a ng-show="isAuth" ui-sref='users({ id: username })' class='create'>My Snippets</a></li>
+                <li><a ng-show="isAuth" ui-sref='users({ id: username })' class='create'>My Profile</a></li>
                 <li><a ng-show="isAuth" href='/auth/logout' class='logout'>Logout</a><li>
                 <li><a ng-hide="isAuth" href='/auth/github' class='logout'>Login With Github</a></li>
               </div>

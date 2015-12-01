@@ -1,12 +1,14 @@
 <div ng-controller="SnippetsUserController" id='container' >
-      <a href="/api/user/{{username}}/download" class="btn waves-effect waves-light orange grey-text text-darken-4">
+      <a href="/api/user/{{username}}/download" class="btn waves-effect waves-teal teal lighten-2 grey-text text-darken-4 floatright">
         <i class="mdi-content-archive">&nbsp;&nbsp;</i>
         Download All
       </a>
       <span>
-        <a ng-click="followUser(username, null)" class="btn waves-effect waves-light orange grey-text text-darken-4">Follow Me</a>
+        <a ng-click="followUser(username, null)" class="btn waves-effect waves-teal teal lighten-2 grey-text text-darken-4 floatright">Follow Me</a>
       </span>
-      <div class="container snipslist">
+      <div class=" container">
+        <div class="snipslist col-md-6">
+          <h4> Snippets</h4>
           <ul ng-repeat="snippet in snippets | snippetFilter:search | orderBy:sortorder track by $index" class="collection">
             <li class="collection-item blue-grey lighten-5 z-depth-5">
               <div class="row">
@@ -52,5 +54,12 @@
             </div> <!-- row -->
             </li>
           </ul> <!-- ng-repeat -->
+        </div>
       </div> <!-- materialize container -->
+      <div class="col-md-6 followerslist">
+        <h4> Followers</h4>
+        <div ng-repeat="follower in followers">
+          <a ui-sref="users({ id: follower })">{{follower}}</a>
+        </div>
+      </div>
 </div> <!-- ng-controller -->
