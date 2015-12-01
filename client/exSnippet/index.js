@@ -12,6 +12,8 @@ var gh = (function() {
     email:''
   };
   var tokenFetcher = (function() {
+    // register app for authorization with github
+
     var clientId = 'fbae39ece502e521f0a5';
     var secret = 'e8ede608a5dccc649af9966881b50f0befea8f67';
     var redirectUri = 'https://' + chrome.runtime.id + 
@@ -184,18 +186,21 @@ function getUserInfo(interactive) {
       User.email = user_info.email;
       User.login = user_info.login;
       document.getElementById('user_info').innerHTML = "<b>Hello " + User.login;
+      console.log("in userInfo hiding signin button")
       hideButton(signin_button);
       var user = User;
 
     } else {
-      console.log('in else')
-      showButton(signin_button)
+      console.log('in else showing button')
+      // showButton(signin_button)
     }
   }
   function interactiveSignIn() {
+  console.log("disabling button");
   disableButton(signin_button);
   tokenFetcher.getToken(true, function(error, access_token) {
     if (error) {
+      console.log("in interactive showing button")
       showButton(signin_button);
     } else {
       console.log("interactiveSignIn :", access_token)
@@ -206,14 +211,16 @@ function getUserInfo(interactive) {
   function revokeToken() {
     console.log(access_token)
     console.log(User.login)
+    console.log(User.id);
   var xhr = new XMLHttpRequest();
       xhr.open('DELETE',
-        'https://github.com/settings/connections/' + User.id + '/tokens/' + access_token.access_token)
+        'https://github.com/authorization/' + User.id)
       xhr.setRequestHeader('Authorization', 'Basic')
         // '/applications/fbae39ece502e521f0a5/tokens/' + access_token.access_token);
       xhr.send()
     user_info_div.textContent = '';
     hideButton(revoke_button);
+    console.log('in revokeToken showing button')
     showButton(signin_button);
   }
 
@@ -259,7 +266,6 @@ function getUserInfo(interactive) {
       console.log(signin_button, revoke_button, user_info_div);
       addSnippet_button = document.querySelector('#addSnippet');
       addSnippet_button.onclick = writeSnippet;
-      showButton(signin_button);
       getUserInfo(false);
     }
   };
