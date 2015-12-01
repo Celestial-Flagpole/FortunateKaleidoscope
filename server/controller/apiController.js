@@ -18,7 +18,6 @@ module.exports = {
 
   // Adds a new snippet to the database
   writeSnippet: function (req, res) {
-    console.log('writeSnippet')
     helpers.writeSnippet(req, function () {
         res.json({created: true});
       });
